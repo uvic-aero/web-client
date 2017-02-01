@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Router } from 'react-router';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -13,14 +13,15 @@ import routes from './routes';
 
 injectTapEventPlugin();
 
-const theme = darkBaseTheme;
+const theme = lightBaseTheme;
 
-theme.palette.primary1Color = '#333a41';
-theme.palette.primary2Color = 'rgb(40, 46, 51)';
-theme.palette.accent1Color = '#eba91b';
-theme.palette.accent2Color = '#eba91b';
-theme.palette.accent3Color = '#eba91b';
-theme.palette.alternateTextColor = '#eba91b';
+theme.palette.primary1Color = '#212121';
+theme.palette.primary2Color = '#424242';
+theme.palette.accent1Color = '#332d39';
+theme.palette.accent2Color = '#009688';
+theme.palette.accent3Color = '#00796B';
+theme.palette.alternateTextColor = '#EEEEEE';
+theme.palette.textColor = "#BDBDBD";
 
 ReactDOM.render(
   <Provider store={store}>

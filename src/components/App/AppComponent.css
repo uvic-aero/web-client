@@ -7,4 +7,13 @@ body {
 
 .root {
   min-height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+
+}
+
+.child {
+  flex: 1;
 }

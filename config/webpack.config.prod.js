@@ -1,5 +1,7 @@
 var cssnext = require('postcss-cssnext');
-var imports = require('postcss-import-url');
+var imports = require('postcss-import');
+var importUrl = require('postcss-import-url');
+var variables = require('postcss-simple-vars');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -169,7 +171,9 @@ module.exports = {
   postcss: function() {
     return [
       imports(),
-      cssnext()
+      importUrl(),
+      variables(),
+      cssnext(),
     ];
   },
   plugins: [

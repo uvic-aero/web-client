@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-export default class AppComponent extends Component {
+export default class TargetAnalysis extends Component {
 
   render() {
 
     return (
       <div>
-        Image Queue
+        Target analysis
       </div>
     );
   }

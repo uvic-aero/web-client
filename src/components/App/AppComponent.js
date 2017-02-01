@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import Sidebar from '../Sidebar/Sidebar';
 import s from './AppComponent.css';
+
+import Paper from 'material-ui/Paper';
 
 export default class AppComponent extends Component {
 
@@ -11,7 +14,12 @@ export default class AppComponent extends Component {
 
     return (
       <div className={s.root}>
-        {this.props.children}
+        <Paper className={s.sidebar} zDepth={3}>
+          <Sidebar />
+        </Paper>
+        <div className={s.child}>
+          {this.props.children}
+        </div>
       </div>
     );
   }

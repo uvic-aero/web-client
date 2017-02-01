@@ -1,0 +1,48 @@
+@import '../variables.css';
+
+.root {
+  height: 100%;
+  width: 100%;
+  background-color: $sidebarColor;
+  color: #ffffff;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+}
+
+.logo {
+  position: relative;
+
+  & img {
+    width: 125px;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+.menu {
+
+  & svg {
+    width: 20px !important;
+    height: 20px !important;
+    top: 2px !important;
+  }
+
+  & .menu_item {
+
+    color: #eeeeee !important;
+    font-size: 0.9rem !important;
+
+    & svg {
+      fill: rgba(255,255,255,0.5) !important;
+    }
+  }
+
+  & .menu_item.focused {
+    background: rgba(0, 0, 0, 0.422) !important;
+
+    & svg {
+      fill: #ffffff !important;
+    }
+  }
+}
+
