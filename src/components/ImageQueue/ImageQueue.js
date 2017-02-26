@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Image from './Image';
 
 export default class ImageQueue extends Component {
 
@@ -6,7 +7,7 @@ export default class ImageQueue extends Component {
 
     return (
       <div>
-        Image Queue
+        <Image />
       </div>
     );
   }
