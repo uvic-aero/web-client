@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 
 import Image from './Image';
+import ImageDock from './ImageDock';
 
 import FastRewind from 'material-ui/svg-icons/av/fast-rewind';
 import SkipPrevious from 'material-ui/svg-icons/av/skip-previous';
@@ -44,6 +45,7 @@ class ImageQueue extends Component {
 		<FastForward
 		  onTouchTap={this.props.gotoLastImage}
 		/>
+		<ImageDock />
       </div>
     );
   }
