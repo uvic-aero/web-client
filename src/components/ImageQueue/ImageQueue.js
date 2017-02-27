@@ -4,8 +4,10 @@ import { connect } from 'react-redux'
 
 import Image from './Image';
 
-import SkipNext from 'material-ui/svg-icons/av/skip-next';
+import FastRewind from 'material-ui/svg-icons/av/fast-rewind';
 import SkipPrevious from 'material-ui/svg-icons/av/skip-previous';
+import SkipNext from 'material-ui/svg-icons/av/skip-next';
+import FastForward from 'material-ui/svg-icons/av/fast-forward';
 
 import {
   nextImage,
@@ -36,14 +38,18 @@ class ImageQueue extends Component {
 
     return (
       <div>
+		<FastRewind
+		  onTouchTap={this.props.gotoFirstImage}
+		/>
 		<SkipPrevious
-		  label='Previous Image'
 		  onTouchTap={this.props.previousImage}
 		/>
         <Image />
 		<SkipNext
-		  label='Next Image'
 		  onTouchTap={this.props.nextImage}
+		/>
+		<FastForward
+		  onTouchTap={this.props.gotoLastImage}
 		/>
       </div>
     );
