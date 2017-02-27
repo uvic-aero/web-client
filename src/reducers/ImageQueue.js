@@ -1,14 +1,17 @@
+import _ from 'lodash';
 import {
   NEXT_IMAGE,
   PREVIOUS_IMAGE,
   GOTO_FIRST_IMAGE,
   GOTO_LAST_IMAGE,
   GOTO_IMAGE_AT_INDEX,
+  TAG_IMAGE_AT_INDEX,
 } from '../actions/ImageQueue'
 
 let initialState = {
   images: ['./image.jpg', './image2.png', './image3.png', './image4.png', './image5.png', './image6.png'],
   currentIndex: 0,
+  taggedImageIndices: [],
 }
 
 export default function reduce(state = initialState, action) {
@@ -40,6 +43,17 @@ export default function reduce(state = initialState, action) {
 	  return Object.assign({}, state, {
 		currentIndex: action.index
 	  })
+    case TAG_IMAGE_AT_INDEX:
+	  if (_.find(state.taggedImageIndices, action.index) === -1) {
+		return Object.assign({}, state, {
+		  taggedImageIndices: _.concat(state.taggedImageIndices, [action.index])
+		})
+	  }
+	  else {
+		return Object.assign({}, state, {
+		  taggedImageIndices: _.difference(state.taggedImageIndices, [action.index])
+		})
+	  }
     default:
       return state
   }

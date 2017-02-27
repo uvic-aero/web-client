@@ -3,6 +3,7 @@ export const PREVIOUS_IMAGE = 'PREVIOUS_IMAGE';
 export const GOTO_FIRST_IMAGE = 'GOTO_FIRST_IMAGE';
 export const GOTO_LAST_IMAGE = 'GOTO_LAST_IMAGE';
 export const GOTO_IMAGE_AT_INDEX = 'GOTO_IMAGE_AT_INDEX';
+export const TAG_IMAGE_AT_INDEX = 'TAG_IMAGE_AT_INDEX';
 
 export function nextImage() {
   return { type: NEXT_IMAGE }
@@ -22,4 +23,8 @@ export function gotoLastImage() {
 
 export function gotoImageAtIndex(i) {
   return { type: GOTO_IMAGE_AT_INDEX, index: i }
+};
+
+export function tagImageAtIndex(i) {
+  return { type: TAG_IMAGE_AT_INDEX, index: i }
 };
