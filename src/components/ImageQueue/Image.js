@@ -30,7 +30,7 @@ class Image extends Component {
 
     return (
 	  <div>
-		<img alt="sample" src={this.props.images[this.props.currentIndex]}></img>
+		<img alt="sample" src={require(this.props.images[this.props.currentIndex])}></img>
 	  </div>
     );
   }
