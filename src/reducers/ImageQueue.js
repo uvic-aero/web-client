@@ -7,7 +7,7 @@ import {
 } from '../actions/ImageQueue'
 
 let initialState = {
-  images: ['./image.jpg', './image2.png', './image3.png'],
+  images: ['./image.jpg', './image2.png', './image3.png', './image4.png', './image5.png', './image6.png'],
   currentIndex: 0,
 }
 

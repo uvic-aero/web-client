@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
+import s from './ImageQueue.css';
 
 import Image from './Image';
 import ImageDock from './ImageDock';
@@ -31,7 +32,7 @@ class ImageQueue extends Component {
   render() {
 
     return (
-      <div>
+      <div className={s.root}>
 		<FastRewind
 		  onTouchTap={this.props.gotoFirstImage}
 		/>
