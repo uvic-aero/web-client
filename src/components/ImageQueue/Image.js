@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import s from './ImageQueue.css';
 
 function mapStateToProps(state, props) {
   return {
@@ -13,7 +14,7 @@ class Image extends Component {
   render() {
 
     return (
-	  <div>
+	  <div className={s.image}>
 		<img alt="sample" src={require(this.props.images[this.props.currentIndex])}></img>
 	  </div>
     );
