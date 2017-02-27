@@ -1,14 +1,39 @@
 import React, { Component } from 'react';
-import image from './image.jpg';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
 
-export default class Image extends Component {
+import { 
+  nextImage, 
+  previousImage, 
+  gotoFirstImage, 
+  gotoLastImage 
+} from '../../actions/ImageQueue';
 
+function mapStateToProps(state, props) {
+  return {
+	images: state.images,
+    currentIndex: state.currentIndex,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return { ...bindActionCreators({
+    nextImage,
+    previousImage,
+    gotoFirstImage,
+    gotoLastImage,
+  }, dispatch) }
+}
+
+class Image extends Component {
   render() {
 
     return (
 	  <div>
-		<img alt="sample" src={image}></img>
+		<img alt="sample" src={this.props.images[this.props.currentIndex]}></img>
 	  </div>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Image);
