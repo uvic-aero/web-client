@@ -16,13 +16,6 @@ import {
   gotoLastImage
 } from '../../actions/ImageQueue';
 
-function mapStateToProps(state, props) {
-  return {
-	images: state.ImageQueue.images,
-	currentIndex: state.ImageQueue.currentIndex,
-  }
-}
-
 function mapDispatchToProps(dispatch) {
   return { ...bindActionCreators({
     nextImage,
@@ -56,4 +49,4 @@ class ImageQueue extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImageQueue);
+export default connect(null, mapDispatchToProps)(ImageQueue);
