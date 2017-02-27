@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import ImageTaggingPopover from './ImageTaggingPopover';
 import s from './ImageQueue.css';
-
-import {
-  tagImageAtIndex,
-} from '../../actions/ImageQueue';
-
-function mapDispatchToProps(dispatch) {
-  return { ...bindActionCreators({
-    tagImageAtIndex,
-  }, dispatch) }
-}
 
 function mapStateToProps(state, props) {
   return {
@@ -22,15 +13,14 @@ function mapStateToProps(state, props) {
 }
 
 class Image extends Component {
-
   render() {
-
     return (
 	  <div className={s.image}>
-		<img alt="sample" src={require(this.props.images[this.props.currentIndex])}></img>
+		<img alt="sample" src={require(this.props.images[this.props.currentIndex])} />
+		<ImageTaggingPopover />
 	  </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Image);
+export default connect(mapStateToProps)(Image);
