@@ -11,8 +11,8 @@ import {
 
 function mapStateToProps(state, props) {
   return {
-	images: state.images,
-    currentIndex: state.currentIndex,
+	images: state.ImageQueue.images,
+	currentIndex: state.ImageQueue.currentIndex,
   }
 }
 
