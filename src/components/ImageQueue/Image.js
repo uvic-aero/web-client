@@ -26,6 +26,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 class Image extends Component {
+
   render() {
 
     return (
