@@ -1,1 +1,17 @@
 @import '../variables.css';
+
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.gridList {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.titleStyle {
+  color: rgb(0; 188; 212);
+}
