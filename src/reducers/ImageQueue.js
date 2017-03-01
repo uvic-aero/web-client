@@ -6,12 +6,14 @@ import {
   GOTO_LAST_IMAGE,
   GOTO_IMAGE_AT_INDEX,
   TAG_IMAGE_AT_INDEX,
+  TOGGLE_TAGGING_POPOVER,
 } from '../actions/ImageQueue'
 
 let initialState = {
   images: ['./image.jpg', './image2.png', './image3.png', './image4.png', './image5.png', './image6.png'],
   currentIndex: 0,
   taggedImageIndices: [],
+  taggingPopoverIsOpen: false,
 }
 
 export default function reduce(state = initialState, action) {
@@ -54,6 +56,10 @@ export default function reduce(state = initialState, action) {
 		  taggedImageIndices: _.difference(state.taggedImageIndices, [action.index])
 		})
 	  }
+	case TOGGLE_TAGGING_POPOVER:
+	  return Object.assign({}, state, {
+		taggingPopoverIsOpen: !state.taggingPopoverIsOpen
+	  })
     default:
       return state
   }
