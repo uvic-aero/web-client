@@ -28,8 +28,8 @@ export function gotoImageAtIndex(i) {
 
 export function tagImageAtIndex(i) {
   return { type: TAG_IMAGE_AT_INDEX, index: i }
+};
 
 export function toggleTaggingPopover() {
   return { type: TOGGLE_TAGGING_POPOVER }
-}
 };

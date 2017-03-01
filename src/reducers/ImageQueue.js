@@ -10,7 +10,7 @@ import {
 } from '../actions/ImageQueue'
 
 let initialState = {
-  images: ['./image.jpg', './image2.png', './image3.png', './image4.png', './image5.png', './image6.png'],
+  images: ['./images/image.jpg', './images/image2.png', './images/image3.png', './images/image4.png', './images/image5.png', './images/image6.png'],
   currentIndex: 0,
   taggedImageIndices: [],
   taggingPopoverIsOpen: false,
