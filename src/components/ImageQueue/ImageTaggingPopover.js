@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import _ from 'lodash';
 import s from './ImageQueue.css';
 
 import {
@@ -49,13 +50,24 @@ class ImageTaggingPopover extends Component {
     });
   };
 
+  renderTag = () => {
+	if (_.findIndex(this.props.taggedIndices, this.props.currentIndex) !== -1) {
+	  return (<div>The above image is tagged.</div>)
+	}
+	else {
+	  return (<div>The above image is not tagged.</div>)
+	}
+  }
+
   render() {
     return (
       <div>
+		{ this.renderTag() }
         <RaisedButton
 		  className={s.taggingButton}
           onTouchTap={this.handleTouchTap}
           label="Tag Image"
+		  labelColor="black"
         />
         <Popover
           open={this.state.open}
@@ -65,7 +77,10 @@ class ImageTaggingPopover extends Component {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <MenuItem primaryText="Tag Image" />
+            <MenuItem 
+			  primaryText="Tag Image"
+			  onTouchTap={_.partial(this.props.tagImageAtIndex, this.props.currentIndex)}
+			/>
             <MenuItem primaryText="Auto-hide this menu" />
             <MenuItem primaryText="Another option" />
           </Menu>
