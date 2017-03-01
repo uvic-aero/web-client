@@ -60,8 +60,8 @@ class ImageTaggingPopover extends Component {
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          anchorOrigin={{horizontal:"right",vertical:"bottom"}}
+          targetOrigin={{horizontal:"right",vertical:"top"}}
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
