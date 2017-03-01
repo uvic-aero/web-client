@@ -53,6 +53,7 @@ class ImageTaggingPopover extends Component {
     return (
       <div>
         <RaisedButton
+		  className={s.taggingButton}
           onTouchTap={this.handleTouchTap}
           label="Click me"
         />
