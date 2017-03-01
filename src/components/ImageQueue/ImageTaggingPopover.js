@@ -55,7 +55,7 @@ class ImageTaggingPopover extends Component {
         <RaisedButton
 		  className={s.taggingButton}
           onTouchTap={this.handleTouchTap}
-          label="Click me"
+          label="Tag Image"
         />
         <Popover
           open={this.state.open}
@@ -65,10 +65,9 @@ class ImageTaggingPopover extends Component {
           onRequestClose={this.handleRequestClose}
         >
           <Menu>
-            <MenuItem primaryText="Refresh" />
-            <MenuItem primaryText="Help &amp; feedback" />
-            <MenuItem primaryText="Settings" />
-            <MenuItem primaryText="Sign out" />
+            <MenuItem primaryText="Tag Image" />
+            <MenuItem primaryText="Auto-hide this menu" />
+            <MenuItem primaryText="Another option" />
           </Menu>
         </Popover>
       </div>
