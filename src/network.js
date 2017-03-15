@@ -32,7 +32,7 @@ class Network {
 
     reconnect() {
 
-        this.setTimeout(() => {
+        setTimeout(() => {
 
             this.connect();
         }, 5000);
@@ -81,9 +81,13 @@ class Network {
 
     get socketFuncs() {
 
+        const network = this;
+
         return  {
             onopen: function () {
-                this.connected = true;
+                network.connected = true;
+
+                console.log("WebSocket connected");
             },
 
             onmessage: function (msg) {
@@ -139,7 +143,7 @@ class Network {
 
                 console.log(reason);
 
-                this.reconnect();
+                network.reconnect();
             }
         };
     }
