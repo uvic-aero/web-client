@@ -79,7 +79,7 @@ class ImageTaggingPopover extends Component {
           <Menu>
             <MenuItem 
 			  primaryText="Tag Image"
-			  onTouchTap={_.partial(this.props.tagImageAtIndex, this.props.currentIndex)}
+			  onClick={_.partial(this.props.tagImageAtIndex, this.props.currentIndex)}
 			/>
             <MenuItem primaryText="Auto-hide this menu" />
             <MenuItem primaryText="Another option" />
