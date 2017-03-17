@@ -46,7 +46,7 @@ export default function reduce(state = initialState, action) {
 		currentIndex: action.index
 	  })
     case TAG_IMAGE_AT_INDEX:
-	  if (_.find(state.taggedImageIndices, action.index) === -1) {
+	  if (_.find(state.taggedImageIndices, function(i) { return(i == action.index) }) === undefined) {
 		return Object.assign({}, state, {
 		  taggedImageIndices: _.concat(state.taggedImageIndices, [action.index])
 		})
