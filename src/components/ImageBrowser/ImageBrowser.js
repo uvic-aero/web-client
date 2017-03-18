@@ -1,6 +1,31 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+import {GridList, GridTile} from 'material-ui/GridList';
+import IconButton from 'material-ui/IconButton';
+import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import cx from 'classnames';
+import s from './ImageBrowser.css';
 
-export default class ImageBrowser extends Component {
+import {
+  gotoImageAtIndex,
+} from '../../actions/ImageQueue';
+
+function mapDispatchToProps(dispatch) {
+  return { ...bindActionCreators({
+	gotoImageAtIndex,
+  }, dispatch) }
+}
+
+function mapStateToProps(state, props) {
+  return {
+	images: state.network.images,
+	currentIndex: state.ImageQueue.currentIndex,
+  }
+}
+
+class ImageBrowser extends Component {
 
   render() {
 
@@ -98,24 +123,14 @@ export default class ImageBrowser extends Component {
 
 
     return (
-      <html>
-      <head>
-        <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
-        <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>        
-      </head>
-
-      <body style={body}>
+      <div style={body}>
         <div id="container">
           <TodoList/>
         </div>
         {destination}
-
-        <script type="text/babel">
-        </script>
-      </body>
-      </html>
-              
+	  </div>
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageBrowser);
