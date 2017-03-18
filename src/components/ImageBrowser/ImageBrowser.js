@@ -1,4 +1,32 @@
 import React, { Component } from 'react';
+import Image from 'C:/Users/Sharon Umute/Desktop/Aerowebclient/src/components/ImageQueue/Image';
+import ImageDock from 'C:/Users/Sharon Umute/Desktop/Aerowebclient/src/components/ImageQueue/ImageDock';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux'
+import s from 'C:/Users/Sharon Umute/Desktop/Aerowebclient/src/components/ImageQueue/ImageQueue.css';
+
+
+import FastRewind from 'material-ui/svg-icons/av/fast-rewind';
+import SkipPrevious from 'material-ui/svg-icons/av/skip-previous';
+import SkipNext from 'material-ui/svg-icons/av/skip-next';
+import FastForward from 'material-ui/svg-icons/av/fast-forward';
+
+import {
+  nextImage,
+  previousImage,
+  gotoFirstImage,
+  gotoLastImage
+} from 'C:/Users/Sharon Umute/Desktop/Aerowebclient/src/actions/ImageQueue';
+
+function mapDispatchToProps(dispatch) {
+  return { ...bindActionCreators({
+    nextImage,
+    previousImage,
+    gotoFirstImage,
+    gotoLastImage,
+  }, dispatch) }
+}
 
 export default class ImageBrowser extends Component {
 
@@ -66,7 +94,7 @@ export default class ImageBrowser extends Component {
   
         itemArray.push(
           {
-            text: this._inputElement.value,
+            text: this.props.nextImage,
             key: Date.now()
           }
         );
