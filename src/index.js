@@ -10,6 +10,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import store from './store';
 import routes from './routes';
+import network from './network';
 
 injectTapEventPlugin();
 
