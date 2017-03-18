@@ -34,6 +34,10 @@ class ImageTaggingPopover extends Component {
     };
   }
 
+  componentWillReceiveProps(props) {
+	console.log("Component Will Receive Props: ", props);
+  }
+
   handleTouchTap = (event) => {
     // This prevents ghost click.
     event.preventDefault();
@@ -51,11 +55,11 @@ class ImageTaggingPopover extends Component {
   };
 
   renderTag = () => {
-	if (_.findIndex(this.props.taggedIndices, this.props.currentIndex) !== -1) {
-	  return (<div>The above image is tagged.</div>)
+	if (_.find(this.props.taggedIndices, function(i) { return(this.props.currentIndex === i); })) {
+	  return (<div>The above image is not tagged.</div>)
 	}
 	else {
-	  return (<div>The above image is not tagged.</div>)
+	  return (<div>The above image is tagged.</div>)
 	}
   }
 
