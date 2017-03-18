@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
-	images: state.ImageQueue.images,
+	images: state.network.images,
 	currentIndex: state.ImageQueue.currentIndex,
   }
 }
@@ -45,7 +45,7 @@ class ImageDock extends Component {
 			  titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
 			  onTouchTap={_.partial(this.props.gotoImageAtIndex, i)}
 			>
-			  <img src={require(this.props.images[i])} />
+			  <img src={this.props.images[i].url} />
 			</GridTile>
 		  ))}
 		</GridList>
