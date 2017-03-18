@@ -91,7 +91,7 @@ class ImageBrowser extends Component {
   
         itemArray.push(
           {
-            text: this._inputElement.value,
+            text: this.props.nextImage,
             key: Date.now()
           }
         );
