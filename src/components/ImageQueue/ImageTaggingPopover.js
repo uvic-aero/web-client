@@ -55,7 +55,8 @@ class ImageTaggingPopover extends Component {
   };
 
   renderTag = () => {
-	if (_.find(this.props.taggedIndices, function(i) { return(this.props.currentIndex === i); })) {
+	if (this.props.taggedImageIndices.indexOf(this.props.currentIndex) === -1) {
+	  console.log("gets here");
 	  return (<div>The above image is not tagged.</div>)
 	}
 	else {
