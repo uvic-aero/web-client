@@ -87,11 +87,20 @@ class Network {
             onopen: function () {
                 network.connected = true;
 
-                console.log("WebSocket connected");
+                network.send({subscribe: ['images', 'telemetry']});
             },
 
             onmessage: function (msg) {
-                console.log(JSON.parse(msg.data));
+                
+                if (!msg.type) {
+                    return;
+                }
+
+                if (msg.type === 'image') {
+                    // parse image
+                } else if(msg.type === 'telemetry') {
+                    // parse telemetry
+                }
             },
 
             onclose: function (event) {
