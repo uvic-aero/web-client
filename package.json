@@ -51,11 +51,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-<<<<<<< HEAD
     "griddle-react": "^1.0.1",
-=======
     "lodash": "^4.17.4",
->>>>>>> fd1368ed2d1d0c30114890d79ee9cc83047c6001
     "material-ui": "^0.16.7",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
