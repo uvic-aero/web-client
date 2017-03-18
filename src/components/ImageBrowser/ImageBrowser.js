@@ -8,16 +8,6 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import cx from 'classnames';
 import s from './ImageBrowser.css';
 
-import {
-  gotoImageAtIndex,
-} from '../../actions/ImageQueue';
-
-function mapDispatchToProps(dispatch) {
-  return { ...bindActionCreators({
-	gotoImageAtIndex,
-  }, dispatch) }
-}
-
 function mapStateToProps(state, props) {
   return {
 	images: state.network.images,
@@ -65,7 +55,11 @@ class ImageBrowser extends Component {
         var todoEntries = this.props.entries;
 
         function createTasks(item) {
-          return <img key={item.key} alt={item.key} style={todoListMainTheListLi} src={item.text} />
+          return
+          {this.props.images.map((img, i) => (
+              <img key={i} alt={i} style={todoListMainTheListLi} src={this.props.images[i].url} />
+            ))}
+          
         }
     
         var listItems = todoEntries.map(createTasks);
@@ -109,13 +103,8 @@ class ImageBrowser extends Component {
         return (
           <div className="todoListMain">
             <div className="header">
-              <form onSubmit={this.addItem}>
-                <input ref={(a) => this._inputElement = a} placeholder="enter image url" style={listMainHeaderInput}>
-                </input>
-                <button type="submit" style={listMainHeaderButton}>add</button>
-              </form>
+              
             </div>
-            <TodoItems entries={this.state.items}/>
           </div>
         );
       }
@@ -125,7 +114,9 @@ class ImageBrowser extends Component {
     return (
       <div style={body}>
         <div id="container">
-          <TodoList/>
+          {this.props.images.map((img, i) => (
+              <img key={i} alt={i} style={todoListMainTheListLi} src={this.props.images[i].url} />
+            ))}
         </div>
         {destination}
 	  </div>
@@ -133,4 +124,4 @@ class ImageBrowser extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImageBrowser);
+export default connect(mapStateToProps)(ImageBrowser);
