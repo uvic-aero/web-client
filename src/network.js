@@ -1,3 +1,5 @@
+import store from './store';
+import { pushImage } from './actions/network';
 
 class Network {
 
@@ -92,13 +94,15 @@ class Network {
 
             onmessage: function (msg) {
                 
-                if (!msg.type) {
+                const message = JSON.parse(msg.data);
+
+                if (!message.type) {
                     return;
                 }
 
-                if (msg.type === 'image') {
-                    // parse image
-                } else if(msg.type === 'telemetry') {
+                if (message.type === 'image') {
+                   store.dispatch(pushImage({...message, type: null}));
+                } else if(message.type === 'telemetry') {
                     // parse telemetry
                 }
             },
