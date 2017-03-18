@@ -6,17 +6,27 @@ import s from './ImageQueue.css';
 
 function mapStateToProps(state, props) {
   return {
-	images: state.ImageQueue.images,
+	images: state.network.images,
 	currentIndex: state.ImageQueue.currentIndex,
 	taggedImageIndices: state.ImageQueue.taggedImageIndices,
   }
 }
 
 class Image extends Component {
+
+  renderImage = () => {
+	if (this.props.images[this.props.currentIndex] === undefined) {
+	  return (<span>No Images Have Been Received From the Groundstation</span>)
+	}
+	else {
+	  return (<img alt="sample" src={this.props.images[this.props.currentIndex].url} />)
+	}
+  }
+
   render() {
     return (
 	  <div className={s.image}>
-		<img alt="sample" src={require(this.props.images[this.props.currentIndex])} />
+		{ this.renderImage() }
 		<ImageTaggingPopover />
 	  </div>
     );
