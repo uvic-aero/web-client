@@ -1,1 +1,25 @@
 @import '../variables.css';
+
+    .MainPage {
+      padding: 50px;
+      background-color: "#E9E6E6";
+      font-family: "sans-serif";
+    }
+    
+    .ImageGrid {
+      background-color: "#E9E6E6";
+      padding: 30px;
+      margin-bottom: 30px;
+      width: 300px;
+      height: 300px;
+    }
+
+    .buttons {
+    & * {
+        cursor: pointer;
+    }
+
+    &:hover {
+        fill: blue;
+    }
+    }
