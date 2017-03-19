@@ -7,8 +7,6 @@ import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import cx from 'classnames';
 import s from './ImageBrowser.css';
-import Image from '../ImageQueue/Image';
-import ImageDock from '../ImageQueue/ImageDock';
 
 function mapStateToProps(state, props) {
   return {
@@ -22,10 +20,10 @@ class ImageBrowser extends Component {
   render() {  
 
     return (
-      <div>
+      <div className={s.mainPage}>
         <div>
           {this.props.images.map((img, i) => (
-              <img key={i} alt={i} style={s.imageGrid} src={this.props.images[i].url} />
+              <img key={i} alt={i} className={s.imageGrid} src={this.props.images[i].url} />
             )).reverse()}
         </div>
 	  </div>
