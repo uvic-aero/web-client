@@ -1,0 +1,32 @@
+@import '../variables.css';
+
+.menu {
+	color:  blue;
+	font-size: 20px;
+}
+
+.container {
+		color:  blue;
+	font-size: 20px;
+}
+
+.target {
+	color: red;
+}
+
+.target_image {
+	display: inline-block;
+	vertical-align: middle;
+	border: 1px solid black;
+	margin: 25px;
+}
+
+.target_name {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.target_id {
+	display: inline-block;
+	vertical-align: top;
+}

@@ -1,1 +1,14 @@
 @import '../variables.css';
+
+    .mainPage {
+      background-color: "#E9E6E6";
+      padding: 20px;
+      font-family: "sans-serif";
+    }
+    
+    .imageGrid {
+      background-color: "#E9E6E6";
+      padding: 30px;
+      width: 300px;
+      height: 300px;
+    }
