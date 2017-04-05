@@ -2,7 +2,6 @@
 
 .root {
   height: 100%;
-  width: 100%;
 }
 
 .hero {
@@ -45,10 +44,11 @@
 
 .gridList {
   display: flex;
-  flex-wrap: nowrap;
   overflow-x: scroll;
+  flex-flow: row nowrap !important;
 }
 
 .titleStyle {
   color: rgb(0; 188; 212);
+  width: 150px;
 }
