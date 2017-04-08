@@ -35,11 +35,11 @@ class ImageDock extends Component {
 
   renderGridTileStyle = (i) => {
 	if (this.props.currentIndex === i) {
-	  return {'box-sizing': 'border-box',
+	  return {'boxSizing': 'border-box',
 			  'border': '4px solid rgb(0,188,212)'}
 	}
 	else {
-	  return {'box-sizing': 'border-box',
+	  return {'boxSizing': 'border-box',
 			  'border': '4px solid transparent'}
 	}
   }
