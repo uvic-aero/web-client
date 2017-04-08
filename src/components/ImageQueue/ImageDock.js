@@ -35,7 +35,7 @@ class ImageDock extends Component {
 
   renderStar = (i) => {
 	if (this.props.taggedImageIndices.indexOf(i) === -1) {
-	  return (<IconButton><StarBorder color="rgb(0, 188, 212)" /></IconButton>)
+	  return null
 	}
 	else {
 	  return (<IconButton><Star color="rgb(0, 188, 212)" /></IconButton>)

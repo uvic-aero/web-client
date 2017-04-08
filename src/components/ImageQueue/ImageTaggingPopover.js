@@ -50,19 +50,18 @@ class ImageTaggingPopover extends Component {
     });
   };
 
-  renderTag = () => {
+  renderTagOption = () => {
 	if (this.props.taggedImageIndices.indexOf(this.props.currentIndex) === -1) {
-	  return (<div>The above image is not tagged.</div>)
+	  return ("Tag image")
 	}
 	else {
-	  return (<div>The above image is tagged.</div>)
+	  return ("Untag image")
 	}
   }
 
   render() {
     return (
       <div>
-		{ this.renderTag() }
         <RaisedButton
 		  className={s.taggingButton}
           onTouchTap={this.handleTouchTap}
@@ -78,7 +77,7 @@ class ImageTaggingPopover extends Component {
         >
           <Menu>
             <MenuItem 
-			  primaryText="Tag Image"
+			  primaryText={this.renderTagOption()}
 			  onClick={_.partial(this.props.tagImageAtIndex, this.props.currentIndex)}
 			/>
             <MenuItem primaryText="Auto-hide this menu" />
