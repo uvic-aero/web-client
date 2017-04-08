@@ -63,8 +63,8 @@ class ImageQueue extends Component {
 			  onTouchTap={this.props.gotoLastImage}
 			/>
 		  </div>
-		  <ImageTaggingPopover />
 		</div>
+		<ImageTaggingPopover />
 		<ImageDock />
       </div>
     );
