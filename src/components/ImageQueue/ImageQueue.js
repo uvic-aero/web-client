@@ -56,27 +56,19 @@ class ImageQueue extends Component {
       <div className={s.root}>
 		<div className={s.hero} style={backgroundImage}>
 		  <div className={s.buttons}>
-			<span style={leftMargins}>
-			  <FastRewind
-				onTouchTap={this.props.gotoFirstImage}
-			  />
+			<span onTouchTap={this.props.gotoFirstImage} style={leftMargins}>
+			  <FastRewind />
 			</span>
-			<span style={leftMargins}>
-			  <SkipPrevious
-				onTouchTap={this.props.previousImage}
-			  />
+			<span onTouchTap={this.props.previousImage} style={leftMargins}>
+			  <SkipPrevious />
 			</span>
 		  </div>
 		  <div className={s.buttons}>
-			<span style={rightMargins}>
-			  <SkipNext
-				onTouchTap={this.props.nextImage}
-			  />
+			<span onTouchTap={this.props.nextImage} style={rightMargins}>
+			  <SkipNext />
 			</span>
-			<span style={rightMargins}>
-			  <FastForward
-				onTouchTap={this.props.gotoLastImage}
-			  />
+			<span onTouchTap={this.props.gotoLastImage} style={rightMargins}>
+			  <FastForward />
 			</span>
 		  </div>
 		</div>
