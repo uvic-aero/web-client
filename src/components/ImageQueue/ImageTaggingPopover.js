@@ -34,10 +34,6 @@ class ImageTaggingPopover extends Component {
     };
   }
 
-  componentWillReceiveProps(props) {
-	console.log("Component Will Receive Props: ", props);
-  }
-
   handleTouchTap = (event) => {
     // This prevents ghost click.
     event.preventDefault();

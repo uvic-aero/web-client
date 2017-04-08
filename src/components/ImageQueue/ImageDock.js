@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
+import Star from 'material-ui/svg-icons/toggle/star';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import cx from 'classnames';
 import s from './ImageQueue.css';
@@ -26,10 +27,20 @@ function mapStateToProps(state, props) {
   return {
 	images: state.network.images,
 	currentIndex: state.ImageQueue.currentIndex,
+	taggedImageIndices: state.ImageQueue.taggedImageIndices,
   }
 }
 
 class ImageDock extends Component {
+
+  renderStar = (i) => {
+	if (this.props.taggedImageIndices.indexOf(i) === -1) {
+	  return (<IconButton><StarBorder color="rgb(0, 188, 212)" /></IconButton>)
+	}
+	else {
+	  return (<IconButton><Star color="rgb(0, 188, 212)" /></IconButton>)
+	}
+  }
 
   render() {
 
@@ -41,7 +52,7 @@ class ImageDock extends Component {
 			  className={s.titleStyle}
 			  key={i}
 			  title={"an image"}
-			  actionIcon={<IconButton><StarBorder color="rgb(0, 188, 212)" /></IconButton>}
+			  actionIcon={this.renderStar(i)}
 			  titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
 			  onTouchTap={_.partial(this.props.gotoImageAtIndex, i)}
 			>
