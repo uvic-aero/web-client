@@ -21,25 +21,28 @@
 }
 
 .buttons {
-
-  & *:hover {
-	fill: blue;
-  }
-
   & span {
-
 	cursor: pointer;
-
 	display: inline-block;
 	border-radius: 50%;
-	border: 1px solid black;
-	background: black;
+	border: 1px solid transparent;
+	background: #aaa;
+	opacity: 0.7;
 	padding: 10px;
+
+	transition: 0.2s;
+  }
+
+  & span:hover {
+	border: 1px solid transparent;
+	background: white;
+	opacity: 1;
   }
 
   & span svg {
 	display: block;
 	margin: auto;
+	fill: black !important;
   }
 }
 
