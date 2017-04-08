@@ -21,12 +21,26 @@
 }
 
 .buttons {
-  & * {
-	cursor: pointer;
+
+  & *:hover {
+	fill: blue;
   }
 
-  &:hover {
-	fill: blue;
+  & span {
+
+	cursor: pointer;
+
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	border: 1px solid black;
+	background: black;
+	padding: 10px;
+  }
+
+  & span svg {
+	display: block;
+	margin: auto;
   }
 }
 
