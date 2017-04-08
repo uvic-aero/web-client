@@ -33,6 +33,17 @@ function mapStateToProps(state, props) {
 
 class ImageDock extends Component {
 
+  renderGridTileStyle = (i) => {
+	if (this.props.currentIndex === i) {
+	  return {'box-sizing': 'border-box',
+			  'border': '4px solid rgb(0,188,212)'}
+	}
+	else {
+	  return {'box-sizing': 'border-box',
+			  'border': '4px solid transparent'}
+	}
+  }
+
   renderStar = (i) => {
 	if (this.props.taggedImageIndices.indexOf(i) === -1) {
 	  return null
@@ -54,6 +65,7 @@ class ImageDock extends Component {
 			  title={"an image"}
 			  actionIcon={this.renderStar(i)}
 			  titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+			  style={this.renderGridTileStyle(i)}
 			  onTouchTap={_.partial(this.props.gotoImageAtIndex, i)}
 			>
 			  <img src={this.props.images[i].url} />
