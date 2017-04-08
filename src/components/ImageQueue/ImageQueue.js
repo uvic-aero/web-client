@@ -44,28 +44,36 @@ class ImageQueue extends Component {
 	  backgroundImage: 'url(' + imgUrl + ')'
 	}
 
+	let leftMargins = {
+	  marginLeft: '3px'
+	}
+
+	let rightMargins = {
+	  marginRight: '3px'
+	}
+
     return (
       <div className={s.root}>
 		<div className={s.hero} style={backgroundImage}>
 		  <div className={s.buttons}>
-			<span>
+			<span style={leftMargins}>
 			  <FastRewind
 				onTouchTap={this.props.gotoFirstImage}
 			  />
 			</span>
-			<span>
+			<span style={leftMargins}>
 			  <SkipPrevious
 				onTouchTap={this.props.previousImage}
 			  />
 			</span>
 		  </div>
 		  <div className={s.buttons}>
-			<span>
+			<span style={rightMargins}>
 			  <SkipNext
 				onTouchTap={this.props.nextImage}
 			  />
 			</span>
-			<span>
+			<span style={rightMargins}>
 			  <FastForward
 				onTouchTap={this.props.gotoLastImage}
 			  />
