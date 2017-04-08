@@ -48,13 +48,14 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
-  max-width: 90%;
+  width: 100%;
 }
 
 .gridList {
   display: flex;
   overflow-x: scroll;
   flex-flow: row nowrap !important;
+  margin: 0 !important;
 }
 
 .titleStyle {
