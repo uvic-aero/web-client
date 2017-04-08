@@ -6,10 +6,10 @@ import s from './ImageQueue.css';
 
 import ImageDock from './ImageDock';
 
-import FastRewind from 'material-ui/svg-icons/av/fast-rewind';
-import SkipPrevious from 'material-ui/svg-icons/av/skip-previous';
-import SkipNext from 'material-ui/svg-icons/av/skip-next';
-import FastForward from 'material-ui/svg-icons/av/fast-forward';
+import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
+import FirstPage from 'material-ui/svg-icons/navigation/first-page';
+import LastPage from 'material-ui/svg-icons/navigation/last-page';
+import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 
 import {
   nextImage,
@@ -57,18 +57,18 @@ class ImageQueue extends Component {
 		<div className={s.hero} style={backgroundImage}>
 		  <div className={s.buttons}>
 			<span onTouchTap={this.props.gotoFirstImage} style={leftMargins}>
-			  <FastRewind />
+			  <FirstPage />
 			</span>
 			<span onTouchTap={this.props.previousImage} style={leftMargins}>
-			  <SkipPrevious />
+			  <ChevronLeft />
 			</span>
 		  </div>
 		  <div className={s.buttons}>
 			<span onTouchTap={this.props.nextImage} style={rightMargins}>
-			  <SkipNext />
+			  <ChevronRight />
 			</span>
 			<span onTouchTap={this.props.gotoLastImage} style={rightMargins}>
-			  <FastForward />
+			  <LastPage />
 			</span>
 		  </div>
 		</div>
