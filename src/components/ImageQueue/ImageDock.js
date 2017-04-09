@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
-	images: state.network.images,
+	images: state.ImageQueue.images,
 	currentIndex: state.ImageQueue.currentIndex,
 	taggedImageIndices: state.ImageQueue.taggedImageIndices,
   }

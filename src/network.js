@@ -2,58 +2,38 @@ import store from './store';
 import { pushImage } from './actions/network';
 
 class Network {
-
     constructor() {
-
         this.config = {
             host: "127.0.0.1",
             port: 24000
         };
-
         this.socket = null;
         this.connected = false;
-
         this.initialize();
     }
-
     initialize() {
-
         this.connect();
     }
-
     connect() {
-
         if (!this.connected) {
-
             this.socket = new WebSocket(this.address);
             //this.socket.binaryType = "arraybuffer";
-
             this.extendSocket();
         }
     }
-
     reconnect() {
-
         setTimeout(() => {
-
             this.connect();
         }, 5000);
     }
-
     close() {
-
         if (this.connected) {
-
             this.socket.close();
-
             this.connected = false;
         }
     }
-
     send(message) {
-
         if (message !== undefined && message !== null) {
-
             if (typeof message === "object") {
 				try {
 					this.socket.send(JSON.stringify(message));
@@ -67,49 +47,36 @@ class Network {
 			}
         }
     }
-
     extendSocket() {
-
         const funcs = this.socketFuncs;
-
         for(let prop in funcs) {
             this.socket[prop] = funcs[prop];
         }
     }
-
     get address() {
         return `ws://${this.config.host}:${this.config.port}`;
     }
-
     get socketFuncs() {
-
         const network = this;
-
         return  {
             onopen: function () {
                 network.connected = true;
-
                 network.send({subscribe: ['images', 'telemetry']});
             },
-
             onmessage: function (msg) {
                 
                 const message = JSON.parse(msg.data);
-
                 if (!message.type) {
                     return;
                 }
-
                 if (message.type === 'image') {
                    store.dispatch(pushImage({...message, type: null}));
                 } else if(message.type === 'telemetry') {
                     // parse telemetry
                 }
             },
-
             onclose: function (event) {
                 let reason = "";
-
                 switch (event.code) {
                     case 1000:
                         reason = "Connection fulfilled.";
@@ -153,9 +120,7 @@ class Network {
                     default:
                         reason = "Unknown reason.";
                 }
-
                 console.log(reason);
-
                 network.reconnect();
             }
         };

@@ -10,7 +10,7 @@ import s from './ImageBrowser.css';
 
 function mapStateToProps(state, props) {
   return {
-	images: state.network.images,
+	images: state.ImageQueue.images,
 	currentIndex: state.ImageQueue.currentIndex,
   }
 }

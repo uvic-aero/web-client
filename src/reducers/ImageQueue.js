@@ -9,8 +9,12 @@ import {
   TOGGLE_TAGGING_POPOVER,
 } from '../actions/ImageQueue'
 
+import {
+  PUSH_IMAGE
+} from '../actions/network';
+
 let initialState = {
-  images: ['./images/image.jpg', './images/image2.png', './images/image3.png', './images/image4.png', './images/image5.png', './images/image6.png'],
+  images: [],
   currentIndex: 0,
   taggedImageIndices: [],
   taggingPopoverIsOpen: false,
@@ -18,6 +22,9 @@ let initialState = {
 
 export default function reduce(state = initialState, action) {
   switch (action.type) {
+    case PUSH_IMAGE:
+	  return Object.assign({}, state, { images: [...state.images, action.image]});
+
     case NEXT_IMAGE:
 	  return Object.assign({}, state, {
 		currentIndex: (state.currentIndex + 1) % state.images.length
