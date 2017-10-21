@@ -5,6 +5,8 @@
   flex-flow: column nowrap;
   align-items: center;
   height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .hero {
@@ -72,7 +74,7 @@
   overflow-x: scroll;
   flex-flow: row nowrap !important;
   margin: 0 !important;
-  background: $sidebarColor;
+  background: #422e62;
 }
 
 .titleStyle {

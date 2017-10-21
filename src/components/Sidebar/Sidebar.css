@@ -3,19 +3,27 @@
 .root {
   height: 100%;
   width: 100%;
-  background-color: $sidebarColor;
+  background-color: #422e62;
   color: #ffffff;
-  padding: 0.5rem 0;
   box-sizing: border-box;
 }
 
 .logo {
+  padding: 0.5rem 0;
   position: relative;
+  margin-bottom: 20px;
+  background-color: #2e2045;
+  text-align: center;
 
   & img {
     width: 125px;
     margin: 0 auto;
     display: block;
+  }
+
+  & .logo_text {
+    padding: 0.75rem 0;
+    font-size: 1.4rem;
   }
 }
 
@@ -29,11 +37,11 @@
 
   & .menu_item {
 
-    color: #eeeeee !important;
+    color: #ffffff !important;
     font-size: 0.9rem !important;
 
     & svg {
-      fill: rgba(255,255,255,0.5) !important;
+      fill: rgba(255,255,255,0.7) !important;
     }
   }
 

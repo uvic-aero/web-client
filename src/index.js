@@ -22,7 +22,7 @@ theme.palette.accent1Color = '#332d39';
 theme.palette.accent2Color = '#009688';
 theme.palette.accent3Color = '#00796B';
 theme.palette.alternateTextColor = '#EEEEEE';
-theme.palette.textColor = "#BDBDBD";
+theme.palette.textColor = "#ffffff";
 
 ReactDOM.render(
   <Provider store={store}>

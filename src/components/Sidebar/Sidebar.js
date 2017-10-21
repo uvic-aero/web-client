@@ -65,7 +65,7 @@ export default class Sidebar extends Component {
     return (
       <div className={s.root}>
         <div className={s.logo}>
-          <img alt="UVic AERO" src={logo}></img>
+          <div className={s.logo_text}>UVic AERO</div>
         </div>
         <div className={s.menu}>
           <Menu
@@ -79,7 +79,7 @@ export default class Sidebar extends Component {
                 key={el.text}
                 primaryText={el.text}
                 leftIcon={el.icon}
-                innerDivStyle={{ padding: "0 14px 0 50px" }}
+                innerDivStyle={{ padding: "0 20px 0 60px", marginLeft: "10px" }}
                 onTouchTap={()=>{ this.setRoute(el.href); }}
                 className={cx(s.menu_item, { [s.focused]: el.href === currentPath })}
                 hoverColor="rgba(0,0,0,0.248)"
