@@ -23,6 +23,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
+    images: state.images,
     currentIndex: state.ImageQueue.currentIndex,
     taggedImageIndices: state.ImageQueue.taggedImageIndices
   };
@@ -69,6 +70,7 @@ class ImageTaggingPopover extends Component {
           onTouchTap={this.handleTouchTap}
           label="Tag Image"
           labelColor="black"
+          disabled={this.props.images.length===0}
         />
         <Popover
           open={this.state.open}
