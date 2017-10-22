@@ -48,7 +48,9 @@ class Network {
   extendSocket() {
     const funcs = this.socketFuncs;
     for (let prop in funcs) {
-      this.socket[prop] = funcs[prop];
+      if (Object.prototype.hasOwnProperty.call(funcs, prop)) {
+        this.socket[prop] = funcs[prop];
+      }
     }
   }
   get address() {
