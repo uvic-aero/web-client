@@ -35,7 +35,7 @@ export default function reduce(state = initialState, action) {
     case PREVIOUS_IMAGE:
       if (state.currentIndex === 0) {
         return Object.assign({}, state, {
-          currentIndex: state.images.length - 1,
+          currentIndex: 0,
           autoscroll: true
         });
       } else {
