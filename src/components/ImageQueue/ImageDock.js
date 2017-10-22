@@ -66,7 +66,7 @@ class ImageDock extends Component {
   render() {
     return (
       <div className={s.dock}>
-        <GridList className={s.gridList} cols={1.5}>
+        <GridList className={s.gridList} cols={1} cellHeight={150}>
           {this.props.images.map((img, i) => (
             <GridTile
               className={s.titleStyle}

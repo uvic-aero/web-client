@@ -70,22 +70,28 @@
 
 .dock {
   display: flex;
-  flex-flow: row nowrap;
+  flex-wrap: wrap;
   justify-content: space-around;
-  width: 100%;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  padding: 0.25rem;
+  width: 100%;
+  min-height: 174px;
+  box-sizing: border-box;
 }
 
 .gridList {
-  min-height: 250px;
+  
   display: flex;
-  overflow-x: scroll;
-  flex-flow: row nowrap !important;
-  margin: 0 !important;
+  overflow-x: auto;
+  flex-wrap: nowrap !important;
+
+  & > div {
+    width: 25% !important;
+    flex-shrink: 0;
+  }
 }
 
 .titleStyle {
   color: rgb(0, 188, 212);
-  width: 150px;
 }
