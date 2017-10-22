@@ -16,17 +16,16 @@ import {
   nextImage,
   previousImage,
   gotoFirstImage,
-  gotoLastImage
+  gotoLastImage,
+  setQueueAutoscroll
 } from "../../actions/ImageQueue";
-
-import { setQueueAutoscroll } from "../../actions/settings";
 
 function mapStateToProps(state, props) {
   return {
     images: state.ImageQueue.images,
     currentIndex: state.ImageQueue.currentIndex,
     taggedImageIndices: state.ImageQueue.taggedImageIndices,
-    settings: state.settings.imageQueue
+    autoscroll: state.ImageQueue.autoscroll
   };
 }
 
@@ -69,7 +68,7 @@ class ImageQueue extends Component {
           <div className={s.options}>
             <Checkbox
               label="Auto scroll"
-              checked={this.props.settings.autoscroll}
+              checked={this.props.autoscroll}
               onCheck={(_ev, checked) => this.props.setQueueAutoscroll(checked)}
             />
           </div>

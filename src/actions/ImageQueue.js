@@ -5,6 +5,7 @@ export const GOTO_LAST_IMAGE = "GOTO_LAST_IMAGE";
 export const GOTO_IMAGE_AT_INDEX = "GOTO_IMAGE_AT_INDEX";
 export const TAG_IMAGE_AT_INDEX = "TAG_IMAGE_AT_INDEX";
 export const TOGGLE_TAGGING_POPOVER = "TOGGLE_TAGGING_POPOVER";
+export const SET_QUEUE_AUTOSCROLL = "SET_QUEUE_AUTOSCROLL";
 
 export function nextImage() {
   return { type: NEXT_IMAGE };
@@ -32,4 +33,8 @@ export function tagImageAtIndex(i) {
 
 export function toggleTaggingPopover() {
   return { type: TOGGLE_TAGGING_POPOVER };
+}
+
+export function setQueueAutoscroll(scroll) {
+  return { type: SET_QUEUE_AUTOSCROLL, scroll };
 }
