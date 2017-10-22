@@ -8,6 +8,7 @@
   padding: 1rem;
   box-sizing: border-box;
   background-color: #f1f3f6;
+  position: relative;
 }
 
 .hero {
@@ -25,6 +26,13 @@
   margin-bottom: 1rem;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+
+.options {
+  width: 100%;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
 }
 
 .buttons {

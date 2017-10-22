@@ -6,6 +6,7 @@ import s from "./ImageQueue.css";
 
 import ImageDock from "./ImageDock";
 
+import Checkbox from "material-ui/Checkbox";
 import ChevronLeft from "material-ui/svg-icons/navigation/chevron-left";
 import FirstPage from "material-ui/svg-icons/navigation/first-page";
 import LastPage from "material-ui/svg-icons/navigation/last-page";
@@ -18,11 +19,14 @@ import {
   gotoLastImage
 } from "../../actions/ImageQueue";
 
+import { setQueueAutoscroll } from "../../actions/settings";
+
 function mapStateToProps(state, props) {
   return {
     images: state.ImageQueue.images,
     currentIndex: state.ImageQueue.currentIndex,
-    taggedImageIndices: state.ImageQueue.taggedImageIndices
+    taggedImageIndices: state.ImageQueue.taggedImageIndices,
+    settings: state.settings.imageQueue
   };
 }
 
@@ -33,7 +37,8 @@ function mapDispatchToProps(dispatch) {
         nextImage,
         previousImage,
         gotoFirstImage,
-        gotoLastImage
+        gotoLastImage,
+        setQueueAutoscroll
       },
       dispatch
     )
@@ -61,6 +66,13 @@ class ImageQueue extends Component {
     return (
       <div className={s.root}>
         <div className={s.hero} style={backgroundImage}>
+          <div className={s.options}>
+            <Checkbox
+              label="Auto scroll"
+              checked={this.props.settings.autoscroll}
+              onCheck={(_ev, checked) => this.props.setQueueAutoscroll(checked)}
+            />
+          </div>
           <div className={s.buttons}>
             <span onTouchTap={this.props.gotoFirstImage} style={leftMargins}>
               <FirstPage />
