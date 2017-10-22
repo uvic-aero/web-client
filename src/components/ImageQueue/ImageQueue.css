@@ -87,7 +87,7 @@
   flex-wrap: nowrap !important;
 
   & > div {
-    width: 25% !important;
+    width: 250px !important;
     flex-shrink: 0;
   }
 }
