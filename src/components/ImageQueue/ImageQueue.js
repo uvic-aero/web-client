@@ -39,41 +39,41 @@ class ImageQueue extends Component {
 
   render() {
 
-	let imgUrl = this.props.images[this.props.currentIndex] === undefined ? 'images/image.jpg' : this.props.images[this.props.currentIndex].url 
-	let backgroundImage = {
-	  backgroundImage: 'url(' + imgUrl + ')'
-	}
+		let imgUrl = this.props.images[this.props.currentIndex] === undefined ? 'images/image.jpg' : this.props.images[this.props.currentIndex].url 
+		let backgroundImage = {
+			backgroundImage: 'url(' + imgUrl + ')'
+		}
 
-	let leftMargins = {
-	  marginLeft: '3px'
-	}
+		let leftMargins = {
+			marginLeft: '5px'
+		}
 
-	let rightMargins = {
-	  marginRight: '3px'
-	}
+		let rightMargins = {
+			marginRight: '5px'
+		}
 
     return (
       <div className={s.root}>
-		<div className={s.hero} style={backgroundImage}>
-		  <div className={s.buttons}>
-			<span onTouchTap={this.props.gotoFirstImage} style={leftMargins}>
-			  <FirstPage />
-			</span>
-			<span onTouchTap={this.props.previousImage} style={leftMargins}>
-			  <ChevronLeft />
-			</span>
-		  </div>
-		  <div className={s.buttons}>
-			<span onTouchTap={this.props.nextImage} style={rightMargins}>
-			  <ChevronRight />
-			</span>
-			<span onTouchTap={this.props.gotoLastImage} style={rightMargins}>
-			  <LastPage />
-			</span>
-		  </div>
-		</div>
-		<ImageTaggingPopover />
-		<ImageDock />
+				<div className={s.hero} style={backgroundImage}>
+					<div className={s.buttons}>
+						<span onTouchTap={this.props.gotoFirstImage} style={leftMargins}>
+							<FirstPage />
+						</span>
+						<span onTouchTap={this.props.previousImage} style={leftMargins}>
+							<ChevronLeft />
+						</span>
+					</div>
+					<div className={s.buttons}>
+						<span onTouchTap={this.props.nextImage} style={rightMargins}>
+							<ChevronRight />
+						</span>
+						<span onTouchTap={this.props.gotoLastImage} style={rightMargins}>
+							<LastPage />
+						</span>
+					</div>
+				</div>
+				<ImageTaggingPopover />
+				<ImageDock />
       </div>
     );
   }

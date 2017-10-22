@@ -63,10 +63,10 @@ class ImageTaggingPopover extends Component {
     return (
       <div>
         <RaisedButton
-		  className={s.taggingButton}
+		      className={s.taggingButton}
           onTouchTap={this.handleTouchTap}
           label="Tag Image"
-		  labelColor="black"
+		      labelColor="black"
         />
         <Popover
           open={this.state.open}
@@ -77,9 +77,9 @@ class ImageTaggingPopover extends Component {
         >
           <Menu>
             <MenuItem 
-			  primaryText={this.renderTagOption()}
-			  onClick={_.partial(this.props.tagImageAtIndex, this.props.currentIndex)}
-			/>
+              primaryText={this.renderTagOption()}
+              onClick={_.partial(this.props.tagImageAtIndex, this.props.currentIndex)}
+            /> 
             <MenuItem primaryText="Auto-hide this menu" />
             <MenuItem primaryText="Another option" />
           </Menu>

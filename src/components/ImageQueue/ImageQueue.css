@@ -7,6 +7,7 @@
   height: 100%;
   padding: 1rem;
   box-sizing: border-box;
+  background-color: #f1f3f6;
 }
 
 .hero {
@@ -20,45 +21,50 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
+
+  margin-bottom: 1rem;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
 .buttons {
   & span {
-	cursor: pointer;
-	display: inline-block;
-	border-radius: 50%;
-	border: 1px solid transparent;
-	background: #aaa;
-	opacity: 0.7;
-	padding: 10px;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background: #aaa;
+    opacity: 0.7;
+    padding: 10px;
 
-	transition: 0.2s;
+    transition: 0.2s;
   }
 
   & span:hover {
-	border: 1px solid transparent;
-	background: white;
-	opacity: 1;
+    border: 1px solid transparent;
+    background: rgba(0, 0, 0, 0.12);
+    opacity: 1;
   }
 
   & span svg {
-	display: block;
-	margin: auto;
-	fill: black !important;
+    display: block;
+    margin: auto;
+    fill: black !important;
   }
 }
 
 .taggingButton {
   position: absolute;
-  right: 20px;
-  top:20px;
+  right: 2rem;
+  top: 2rem;
 }
 
 .image {
   position: relative;
   max-height: 400px;
+
   & img {
-	max-height: 400px;
+	  max-height: 400px;
   }
 }
 
@@ -67,17 +73,19 @@
   flex-flow: row nowrap;
   justify-content: space-around;
   width: 100%;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
 .gridList {
+  min-height: 250px;
   display: flex;
   overflow-x: scroll;
   flex-flow: row nowrap !important;
   margin: 0 !important;
-  background: #422e62;
 }
 
 .titleStyle {
-  color: rgb(0; 188; 212);
+  color: rgb(0, 188, 212);
   width: 150px;
 }
