@@ -1,13 +1,13 @@
-import { createStore, combineReducers } from 'redux';
-import { routerReducer as routing } from 'react-router-redux';
-import ImageQueue from './reducers/ImageQueue';
+import { createStore, combineReducers } from "redux";
+import { routerReducer as routing } from "react-router-redux";
+import ImageQueue from "./reducers/ImageQueue";
 
 const store = createStore(
   combineReducers({
-	routing,
-	ImageQueue
-  }), 
-  {}, 
+    routing,
+    ImageQueue
+  }),
+  {},
   window.devToolsExtension && window.devToolsExtension()
 );
 
