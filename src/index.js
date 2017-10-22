@@ -16,13 +16,13 @@ injectTapEventPlugin();
 
 const theme = lightBaseTheme;
 
-theme.palette.primary1Color = "#212121";
+theme.palette.primary1Color = "#422e62";
 theme.palette.primary2Color = "#424242";
 theme.palette.accent1Color = "#332d39";
 theme.palette.accent2Color = "#009688";
 theme.palette.accent3Color = "#00796B";
 theme.palette.alternateTextColor = "#EEEEEE";
-theme.palette.textColor = "#ffffff";
+theme.palette.textColor = "#212121";
 
 ReactDOM.render(
   <Provider store={store}>
