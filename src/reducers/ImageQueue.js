@@ -22,7 +22,7 @@ export default function reduce(state = initialState, action) {
   switch (action.type) {
     case PUSH_IMAGE:
       return Object.assign({}, state, {
-        images: [...state.images, action.image]
+        images: [action.image, ...state.images]
       });
 
     case NEXT_IMAGE:

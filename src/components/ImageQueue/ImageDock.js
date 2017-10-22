@@ -70,7 +70,7 @@ class ImageDock extends Component {
           {this.props.images.map((img, i) => (
             <GridTile
               className={s.titleStyle}
-              key={i}
+              key={img._id}
               title={"an image"}
               actionIcon={this.renderStar(i)}
               titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
