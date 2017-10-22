@@ -5,13 +5,9 @@ import { connect } from "react-redux";
 import { GridList, GridTile } from "material-ui/GridList";
 import IconButton from "material-ui/IconButton";
 import Star from "material-ui/svg-icons/toggle/star";
-import StarBorder from "material-ui/svg-icons/toggle/star-border";
-import cx from "classnames";
 import s from "./ImageQueue.css";
 
 import {
-  nextImage,
-  previousImage,
   gotoImageAtIndex
 } from "../../actions/ImageQueue";
 
@@ -19,8 +15,6 @@ function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators(
       {
-        nextImage,
-        previousImage,
         gotoImageAtIndex
       },
       dispatch
@@ -30,7 +24,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
-    images: state.ImageQueue.images,
+    images: state.images,
     currentIndex: state.ImageQueue.currentIndex,
     taggedImageIndices: state.ImageQueue.taggedImageIndices
   };

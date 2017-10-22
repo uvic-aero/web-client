@@ -22,7 +22,7 @@ import {
 
 function mapStateToProps(state, props) {
   return {
-    images: state.ImageQueue.images,
+    images: state.images,
     currentIndex: state.ImageQueue.currentIndex,
     taggedImageIndices: state.ImageQueue.taggedImageIndices,
     autoscroll: state.ImageQueue.autoscroll
@@ -76,15 +76,15 @@ class ImageQueue extends Component {
             <span onTouchTap={this.props.gotoFirstImage} style={leftMargins}>
               <FirstPage />
             </span>
-            <span onTouchTap={this.props.previousImage} style={leftMargins}>
+            <span onTouchTap={() => this.props.previousImage(this.props.images)} style={leftMargins}>
               <ChevronLeft />
             </span>
           </div>
           <div className={s.buttons}>
-            <span onTouchTap={this.props.nextImage} style={rightMargins}>
+            <span onTouchTap={() => this.props.nextImage(this.props.images)} style={rightMargins}>
               <ChevronRight />
             </span>
-            <span onTouchTap={this.props.gotoLastImage} style={rightMargins}>
+            <span onTouchTap={() => this.props.gotoLastImage(this.props.images)} style={rightMargins}>
               <LastPage />
             </span>
           </div>

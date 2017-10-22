@@ -1,17 +1,11 @@
 import _ from "lodash";
 import React, { Component } from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { GridList, GridTile } from "material-ui/GridList";
-import IconButton from "material-ui/IconButton";
-import StarBorder from "material-ui/svg-icons/toggle/star-border";
-import cx from "classnames";
 import s from "./ImageBrowser.css";
 
 function mapStateToProps(state, props) {
   return {
-    images: state.ImageQueue.images,
-    currentIndex: state.ImageQueue.currentIndex
+    images: state.images
   };
 }
 
@@ -23,7 +17,7 @@ class ImageBrowser extends Component {
           {this.props.images
             .map((img, i) => (
               <img
-                key={i}
+                key={img._id}
                 alt={i}
                 className={s.imageGrid}
                 src={this.props.images[i].url}

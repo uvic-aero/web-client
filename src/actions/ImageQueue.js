@@ -7,20 +7,20 @@ export const TAG_IMAGE_AT_INDEX = "TAG_IMAGE_AT_INDEX";
 export const TOGGLE_TAGGING_POPOVER = "TOGGLE_TAGGING_POPOVER";
 export const SET_QUEUE_AUTOSCROLL = "SET_QUEUE_AUTOSCROLL";
 
-export function nextImage() {
-  return { type: NEXT_IMAGE };
+export function nextImage(images) {
+  return { type: NEXT_IMAGE, images };
 }
 
-export function previousImage() {
-  return { type: PREVIOUS_IMAGE };
+export function previousImage(images) {
+  return { type: PREVIOUS_IMAGE, images };
 }
 
 export function gotoFirstImage(mode) {
   return { type: GOTO_FIRST_IMAGE, mode };
 }
 
-export function gotoLastImage() {
-  return { type: GOTO_LAST_IMAGE };
+export function gotoLastImage(images) {
+  return { type: GOTO_LAST_IMAGE, images };
 }
 
 export function gotoImageAtIndex(i) {

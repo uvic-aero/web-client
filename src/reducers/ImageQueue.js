@@ -24,12 +24,11 @@ export default function reduce(state = initialState, action) {
   switch (action.type) {
     case PUSH_IMAGE:
       return Object.assign({}, state, {
-        images: [action.image, ...state.images],
         currentIndex: state.autoscroll === true ? 0 : state.currentIndex + 1
       });
     case NEXT_IMAGE:
       return Object.assign({}, state, {
-        currentIndex: (state.currentIndex + 1) % state.images.length,
+        currentIndex: (state.currentIndex + 1) % action.images.length,
         autoscroll: false
       });
     case PREVIOUS_IMAGE:
@@ -40,7 +39,7 @@ export default function reduce(state = initialState, action) {
         });
       } else {
         return Object.assign({}, state, {
-          currentIndex: (state.currentIndex - 1) % state.images.length,
+          currentIndex: (state.currentIndex - 1) % action.images.length,
           autoscroll: false
         });
       }
@@ -51,7 +50,7 @@ export default function reduce(state = initialState, action) {
       });
     case GOTO_LAST_IMAGE:
       return Object.assign({}, state, {
-        currentIndex: state.images.length - 1,
+        currentIndex: action.images.length - 1,
         autoscroll: false
       });
     case GOTO_IMAGE_AT_INDEX:
