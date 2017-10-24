@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: #f1f3f6;
+  position: relative;
+}

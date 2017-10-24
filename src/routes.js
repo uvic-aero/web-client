@@ -7,6 +7,7 @@ import ImageBrowser from "./components/ImageBrowser/ImageBrowser";
 import TargetAnalysis from "./components/TargetAnalysis/TargetAnalysis";
 import SpectatorView from "./components/SpectatorView/SpectatorView";
 import Report from "./components/Report/Report";
+import Liveview from "./components/Liveview/Liveview"
 
 export default (
   <Route>
@@ -16,6 +17,7 @@ export default (
       <Route path="targets" component={TargetAnalysis} />
       <Route path="spectate" component={SpectatorView} />
       <Route path="report" component={Report} />
+      <Route path="liveview" component={Liveview} />
     </Route>
   </Route>
 );
