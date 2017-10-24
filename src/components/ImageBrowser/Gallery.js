@@ -8,17 +8,22 @@ import s from "./Gallery.css";
 function mapStateToProps(state, props) {
   return {
     images: state.images,
-    currentIndex: state.ImageQueue.currentIndex
+    show: state.imageBrowser.show
   };
 }
 
 class Gallery extends Component {
+  applyFilters(image, index, arr) {
+    return true;
+  }
+
   render() {
     return (
       <div className={s.root}>
         <div className={s.images}>
           {this.props.images
             .map(img => <Tile key={img._id} {...img} />)
+            .filter(this.applyFilters)
             .reverse()}
         </div>
       </div>
