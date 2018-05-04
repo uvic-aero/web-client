@@ -5,36 +5,44 @@ import { connect } from "react-redux";
 import Tile from "./Tile";
 import s from "./Gallery.css";
 import network from "../../network";
+import {
+  setBrowserLoading
+} from "../../actions/imageBrowser";
 
 function mapStateToProps(state, props) {
   return {
     images: state.images,
-    show: state.imageBrowser.show
+    show: state.imageBrowser.show,
+    loading: state.imageBrowser.loading
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators(
+      {
+        setBrowserLoading
+      },
+      dispatch
+    )
+  };
+}
+
+
 class Gallery extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      nextLoad: Date.now()
-    };
-  }
-
   applyFilters(image, index, arr) {
     return true;
   }
 
   onScroll = e => {
-    if (this.state.nextLoad > Date.now()) {
+    if (this.props.loading) {
       return;
     }
     const target = e.target;
-    if (target.scrollTop + target.clientHeight >= 0.8 * target.scrollHeight) {
+    if (target.scrollTop + target.clientHeight >= 0.9 * target.scrollHeight) {
       // Pass ID of last image we have, and get images that follow that ID
       network.requestNextImages(this.props.images[this.props.images.length-1]._id);
-      this.setState({nextLoad: Date.now() + 2000});
+      this.props.setBrowserLoading(true);
     }
   };
 
@@ -52,4 +60,4 @@ class Gallery extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Gallery);
+export default connect(mapStateToProps, mapDispatchToProps)(Gallery);

@@ -48,6 +48,28 @@ function mapDispatchToProps(dispatch) {
 }
 
 class ImageQueue extends Component {
+  componentDidMount() {
+    document.addEventListener("keypress", this.handleInput.bind(this));
+  }
+
+  componentWillMount() {
+    document.removeEventListener("keypress", this.handleInput.bind(this));
+  }
+
+  handleInput = ev => {
+    console.log(ev.keyCode);
+    switch (ev.keyCode) {
+      case 37: // Left arrow
+        this.props.previousImage(this.props.images);
+        break;
+      case 39: // Right arrow
+        this.props.nextImage(this.props.images);
+        break;
+      default:
+        break;
+    }
+  };
+
   render() {
     const current_image = this.props.images[this.props.currentIndex];
     const telemetry = current_image ? current_image["telemetry"] : undefined;
@@ -71,11 +93,12 @@ class ImageQueue extends Component {
       <div className={s.root}>
         {current_image && (
           <div className={s.info_container}>
-            <div className={s.info_key}>
-            Taken:
-            </div>
+            <div className={s.info_key}>Taken:</div>
             <div className={s.info_value}>
-              {time.getHours() < 10 ? 0 : ''}{time.getHours()}:{time.getMinutes() < 10 ? 0 : ''}{time.getMinutes()}:{time.getSeconds() < 10 ? 0 : ''}{time.getSeconds()}
+              {time.getHours() < 10 ? 0 : ""}
+              {time.getHours()}:{time.getMinutes() < 10 ? 0 : ""}
+              {time.getMinutes()}:{time.getSeconds() < 10 ? 0 : ""}
+              {time.getSeconds()}
             </div>
             {telemetry && (
               <span>

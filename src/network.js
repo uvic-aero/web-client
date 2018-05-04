@@ -1,5 +1,6 @@
 import store from "./store";
 import { pushImage } from "./actions/network";
+import { setBrowserLoading } from "./actions/imageBrowser";
 
 class Network {
   constructor() {
@@ -53,7 +54,7 @@ class Network {
       }
     }
   }
-  requestNextImages(last_id=null) {
+  requestNextImages(last_id = null) {
     this.send({ type: "request_image_catchup", last: last_id });
   }
   get address() {
@@ -74,6 +75,9 @@ class Network {
         }
         if (message.type === "image") {
           store.dispatch(pushImage({ ...message, type: null }));
+          if (message.source === "request") {
+            store.dispatch(setBrowserLoading(false));
+          }
         } else if (message.type === "telemetry") {
           // parse telemetry
         }
