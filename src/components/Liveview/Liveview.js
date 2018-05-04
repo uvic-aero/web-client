@@ -28,6 +28,23 @@ class Liveview extends Component {
     };
   }
 
+  handleInput = ev => {
+    ev.preventDefault();
+    switch (ev.keyCode) {
+      case 38: // Up arrow
+        zoomIn();
+        break;
+      case 40: // Down arrow
+        zoomOut();
+        break;
+      case 13: // Enter
+        captureStill();
+        break;
+      default:
+        break;
+    }
+  };
+
   statusHandler() {
     if (this.state.statusCall) {
       return;
@@ -57,10 +74,12 @@ class Liveview extends Component {
   componentDidMount() {
     const statusTimer = setInterval(this.statusHandler.bind(this), 2000);
     this.setState(() => ({ statusTimer }));
+    document.addEventListener("keypress", this.handleInput.bind(this));
   }
 
   componentWillUnmount() {
     clearInterval(this.state.statusTimer);
+    document.removeEventListener("keypress", this.handleInput.bind(this));
   }
 
   render() {
