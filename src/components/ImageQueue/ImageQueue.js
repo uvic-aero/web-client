@@ -75,7 +75,7 @@ class ImageQueue extends Component {
             Taken:
             </div>
             <div className={s.info_value}>
-              {time.getHours() < 10 ? 0 : ''}{time.getHours()}:{time.getMinutes()}:{time.getSeconds()}
+              {time.getHours() < 10 ? 0 : ''}{time.getHours()}:{time.getMinutes() < 10 ? 0 : ''}{time.getMinutes()}:{time.getSeconds() < 10 ? 0 : ''}{time.getSeconds()}
             </div>
             {telemetry && (
               <span>

@@ -28,7 +28,11 @@ export default function reduce(state = initialState, action) {
       });
     case NEXT_IMAGE:
       return Object.assign({}, state, {
-        currentIndex: (state.currentIndex + 1) % action.images.length,
+        // Prevent overflow of index
+        currentIndex:
+          state.currentIndex >= action.images.length - 1
+            ? state.currentIndex
+            : state.currentIndex + 1,
         autoscroll: false
       });
     case PREVIOUS_IMAGE:
