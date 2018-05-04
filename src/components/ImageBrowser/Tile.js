@@ -6,13 +6,28 @@ import s from "./Tile.css";
 import { browserHistory } from "react-router";
 import IconButton from "material-ui/IconButton";
 import Star from "material-ui/svg-icons/toggle/star";
+import { gotoImageAtIndex } from "../../actions/ImageQueue";
 
 function mapStateToProps(state, props) {
-  return {};
+  return { images: state.images };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators(
+      {
+        gotoImageAtIndex
+      },
+      dispatch
+    )
+  };
 }
 
 class Tile extends Component {
   showInQueue = () => {
+    this.props.gotoImageAtIndex(
+      this.props.images.findIndex(el => el._id === this.props._id)
+    );
     browserHistory.push("/");
   };
 
@@ -32,4 +47,4 @@ class Tile extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Tile);
+export default connect(mapStateToProps, mapDispatchToProps)(Tile);
