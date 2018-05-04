@@ -39,7 +39,7 @@ class Gallery extends Component {
       return;
     }
     const target = e.target;
-    if (target.scrollTop + target.clientHeight >= 0.9 * target.scrollHeight) {
+    if (target.scrollTop + target.clientHeight >= target.scrollHeight - 500) {
       // Pass ID of last image we have, and get images that follow that ID
       network.requestNextImages(this.props.images[this.props.images.length-1]._id);
       this.props.setBrowserLoading(true);

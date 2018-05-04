@@ -75,11 +75,10 @@ class Network {
         }
         if (message.type === "image") {
           store.dispatch(pushImage({ ...message, type: null }));
-          if (message.source === "request") {
-            store.dispatch(setBrowserLoading(false));
-          }
         } else if (message.type === "telemetry") {
           // parse telemetry
+        } else if (message.type === "image_load_complete") {
+          store.dispatch(setBrowserLoading(false));
         }
       },
       onclose: function(event) {
