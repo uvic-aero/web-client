@@ -53,6 +53,9 @@ class Network {
       }
     }
   }
+  requestNextImages(last_id=null) {
+    this.send({ type: "request_image_catchup", last: last_id });
+  }
   get address() {
     return `ws://${this.config.host}:${this.config.port}`;
   }
@@ -62,7 +65,7 @@ class Network {
       onopen: function() {
         network.connected = true;
         network.send({ subscribe: ["images", "telemetry"] });
-        network.send({ type: 'request_image_catchup'});
+        network.requestNextImages();
       },
       onmessage: function(msg) {
         const message = JSON.parse(msg.data);
@@ -70,7 +73,6 @@ class Network {
           return;
         }
         if (message.type === "image") {
-          console.log(message);
           store.dispatch(pushImage({ ...message, type: null }));
         } else if (message.type === "telemetry") {
           // parse telemetry
