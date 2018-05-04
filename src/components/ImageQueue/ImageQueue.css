@@ -12,6 +12,7 @@
 }
 
 .hero {
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -61,13 +62,6 @@
   }
 }
 
-.taggingButton {
-  position: absolute;
-  right: 2rem;
-  top: 2rem;
-  z-index: 1000;
-}
-
 .image {
   position: relative;
   max-height: 400px;
@@ -103,4 +97,34 @@
 
 .titleStyle {
   color: rgb(0, 188, 212);
+}
+
+.actions {
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  z-index: 1000;
+}
+
+.info_container {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  justify-content: left;
+
+  width: 100%;
+
+  margin-bottom: 1rem;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+
+.info_key {
+  display: inline-block;
+  margin-right: 0.25rem;
+  font-weight: bold;
+}
+
+.info_value {
+  display: inline-block;
+  margin-right: 1rem;
 }

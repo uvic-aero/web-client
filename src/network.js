@@ -62,6 +62,7 @@ class Network {
       onopen: function() {
         network.connected = true;
         network.send({ subscribe: ["images", "telemetry"] });
+        network.send({ type: 'request_image_catchup'});
       },
       onmessage: function(msg) {
         const message = JSON.parse(msg.data);
@@ -69,6 +70,7 @@ class Network {
           return;
         }
         if (message.type === "image") {
+          console.log(message);
           store.dispatch(pushImage({ ...message, type: null }));
         } else if (message.type === "telemetry") {
           // parse telemetry

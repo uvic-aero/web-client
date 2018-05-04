@@ -65,13 +65,13 @@ class ImageDock extends Component {
             <GridTile
               className={s.titleStyle}
               key={img._id}
-              title={"an image"}
+              title=""
               actionIcon={this.renderStar(i)}
               titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
               style={this.renderGridTileStyle(i)}
               onTouchTap={_.partial(this.props.gotoImageAtIndex, i)}
             >
-              <img src={this.props.images[i].url} />
+              <img src={this.props.images[i].url} role="presentation"/>
             </GridTile>
           ))}
         </GridList>

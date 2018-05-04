@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import ImageTaggingPopover from "./ImageTaggingPopover";
@@ -11,13 +11,15 @@ import ChevronLeft from "material-ui/svg-icons/navigation/chevron-left";
 import FirstPage from "material-ui/svg-icons/navigation/first-page";
 import LastPage from "material-ui/svg-icons/navigation/last-page";
 import ChevronRight from "material-ui/svg-icons/navigation/chevron-right";
+import RaisedButton from "material-ui/RaisedButton";
 
 import {
   nextImage,
   previousImage,
   gotoFirstImage,
   gotoLastImage,
-  setQueueAutoscroll
+  setQueueAutoscroll,
+  openCurrentImageAsTab
 } from "../../actions/ImageQueue";
 
 function mapStateToProps(state, props) {
@@ -37,7 +39,8 @@ function mapDispatchToProps(dispatch) {
         previousImage,
         gotoFirstImage,
         gotoLastImage,
-        setQueueAutoscroll
+        setQueueAutoscroll,
+        openCurrentImageAsTab
       },
       dispatch
     )
@@ -46,10 +49,12 @@ function mapDispatchToProps(dispatch) {
 
 class ImageQueue extends Component {
   render() {
+    const current_image = this.props.images[this.props.currentIndex];
+    const telemetry = current_image ? current_image["telemetry"] : undefined;
+    const time = current_image ? new Date(current_image.timestamp) : undefined;
+
     let imgUrl =
-      this.props.images[this.props.currentIndex] === undefined
-        ? "images/image.jpg"
-        : this.props.images[this.props.currentIndex].url;
+      current_image === undefined ? "images/image.jpg" : current_image.url;
     let backgroundImage = {
       backgroundImage: "url(" + imgUrl + ")"
     };
@@ -64,7 +69,35 @@ class ImageQueue extends Component {
 
     return (
       <div className={s.root}>
+        {current_image && (
+          <div className={s.info_container}>
+            <div className={s.info_key}>
+            Taken:
+            </div>
+            <div className={s.info_value}>
+              {time.getHours() < 10 ? 0 : ''}{time.getHours()}:{time.getMinutes()}:{time.getSeconds()}
+            </div>
+            {telemetry && (
+              <span>
+                <div className={s.info_key}>Lat:</div>
+                <div className={s.info_value}>{telemetry.lat}</div>
+                <div className={s.info_key}>Lon:</div>
+                <div className={s.info_value}>{telemetry.lon}</div>
+                <div className={s.info_key}>Alt:</div>
+                <div className={s.info_value}>{telemetry.alt}m</div>
+              </span>
+            )}
+          </div>
+        )}
         <div className={s.hero} style={backgroundImage}>
+          <div className={s.actions}>
+            <RaisedButton
+              onTouchTap={() => window.open(imgUrl, "_blank")}
+              label="Open Tab"
+              labelColor="black"
+              disabled={this.props.images.length === 0}
+            />
+          </div>
           <div className={s.options}>
             <Checkbox
               label="Auto scroll"
@@ -76,20 +109,28 @@ class ImageQueue extends Component {
             <span onTouchTap={this.props.gotoFirstImage} style={leftMargins}>
               <FirstPage />
             </span>
-            <span onTouchTap={() => this.props.previousImage(this.props.images)} style={leftMargins}>
+            <span
+              onTouchTap={() => this.props.previousImage(this.props.images)}
+              style={leftMargins}
+            >
               <ChevronLeft />
             </span>
           </div>
           <div className={s.buttons}>
-            <span onTouchTap={() => this.props.nextImage(this.props.images)} style={rightMargins}>
+            <span
+              onTouchTap={() => this.props.nextImage(this.props.images)}
+              style={rightMargins}
+            >
               <ChevronRight />
             </span>
-            <span onTouchTap={() => this.props.gotoLastImage(this.props.images)} style={rightMargins}>
+            <span
+              onTouchTap={() => this.props.gotoLastImage(this.props.images)}
+              style={rightMargins}
+            >
               <LastPage />
             </span>
           </div>
         </div>
-        <ImageTaggingPopover />
         <ImageDock />
       </div>
     );
