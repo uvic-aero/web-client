@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import ImageTaggingPopover from "./ImageTaggingPopover";
 import s from "./ImageQueue.css";
+import { tagImage, unTagImage } from "../../api";
 
 import ImageDock from "./ImageDock";
 
@@ -22,9 +22,16 @@ import {
   openCurrentImageAsTab
 } from "../../actions/ImageQueue";
 
+import {
+  toggleTag
+} from "../../actions/images";
+
 function mapStateToProps(state, props) {
   return {
     images: state.images,
+    currentImage: state.images.length
+      ? state.images[state.ImageQueue.currentIndex]
+      : undefined,
     currentIndex: state.ImageQueue.currentIndex,
     taggedImageIndices: state.ImageQueue.taggedImageIndices,
     autoscroll: state.ImageQueue.autoscroll
@@ -40,7 +47,8 @@ function mapDispatchToProps(dispatch) {
         gotoFirstImage,
         gotoLastImage,
         setQueueAutoscroll,
-        openCurrentImageAsTab
+        openCurrentImageAsTab,
+        toggleTag
       },
       dispatch
     )
@@ -70,8 +78,22 @@ class ImageQueue extends Component {
     }
   };
 
+  toggleTag() {
+    const currentImage = this.props.currentImage;
+    if (!currentImage) {
+      return;
+    }
+    if (currentImage.tagged) {
+      unTagImage(currentImage._id);
+    } else {
+      tagImage(currentImage._id);
+    }
+
+    this.props.toggleTag(currentImage._id);
+  }
+
   render() {
-    const current_image = this.props.images[this.props.currentIndex];
+    const current_image = this.props.currentImage;
     const telemetry = current_image ? current_image["telemetry"] : undefined;
     const time = current_image ? new Date(current_image.timestamp) : undefined;
 
@@ -119,6 +141,12 @@ class ImageQueue extends Component {
               label="Open Tab"
               labelColor="black"
               disabled={this.props.images.length === 0}
+            />
+            <RaisedButton
+              onTouchTap={() => this.toggleTag()}
+              label={current_image && current_image.tagged ? "Untag" : "Tag"}
+              labelColor="black"
+              disabled={!current_image}
             />
           </div>
           <div className={s.options}>

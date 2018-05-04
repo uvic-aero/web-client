@@ -45,8 +45,8 @@ class ImageDock extends Component {
     }
   };
 
-  renderStar = i => {
-    if (this.props.taggedImageIndices.indexOf(i) === -1) {
+  renderStar = img => {
+    if (!img.tagged) {
       return null;
     } else {
       return (
@@ -65,8 +65,8 @@ class ImageDock extends Component {
             <GridTile
               className={s.titleStyle}
               key={img._id}
-              title=""
-              actionIcon={this.renderStar(i)}
+              title={img.tagged ? "Tagged" : ""}
+              actionIcon={this.renderStar(img)}
               titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
               style={this.renderGridTileStyle(i)}
               onTouchTap={_.partial(this.props.gotoImageAtIndex, i)}

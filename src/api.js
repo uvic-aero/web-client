@@ -46,3 +46,11 @@ export function getMode() {
 export function setMode(mode) {
   return post("/camera/mode", { wanted: mode });
 }
+
+export function tagImage(id) {
+  return post(`/images/${id}/tag`, {});
+}
+
+export function unTagImage(id) {
+  return post(`/images/${id}/untag`, {});
+}

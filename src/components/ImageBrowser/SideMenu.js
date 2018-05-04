@@ -6,11 +6,11 @@ import s from "./SideMenu.css";
 
 import Checkbox from "material-ui/Checkbox";
 
-import { setShowUntagged } from "../../actions/imageBrowser";
+import { setFilter } from "../../actions/imageBrowser";
 
 function mapStateToProps(state, props) {
   return {
-    show: state.imageBrowser.show
+    filters: state.imageBrowser.filters
   };
 }
 
@@ -18,7 +18,7 @@ function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators(
       {
-        setShowUntagged
+        setFilter
       },
       dispatch
     )
@@ -34,8 +34,13 @@ class SideMenu extends Component {
           <div className={s.menu_content}>
             <Checkbox
               label="Untagged"
-              checked={this.props.show.untagged}
-              onCheck={(ev, checked) => this.props.setShowUntagged(checked)}
+              checked={this.props.filters.untagged}
+              onCheck={(ev, checked) => this.props.setFilter('untagged', checked)}
+            />
+            <Checkbox
+              label="Tagged"
+              checked={this.props.filters.tagged}
+              onCheck={(ev, checked) => this.props.setFilter('tagged', checked)}
             />
           </div>
         </div>

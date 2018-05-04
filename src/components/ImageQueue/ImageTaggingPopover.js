@@ -65,13 +65,7 @@ class ImageTaggingPopover extends Component {
   render() {
     return (
       <div>
-        <RaisedButton
-          className={s.taggingButton}
-          onTouchTap={this.handleTouchTap}
-          label="Tag Image"
-          labelColor="black"
-          disabled={this.props.images.length===0}
-        />
+
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}

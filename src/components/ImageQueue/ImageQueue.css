@@ -104,6 +104,10 @@
   right: 2rem;
   top: 2rem;
   z-index: 1000;
+
+  & > div:not(:last-child) {
+    margin-right: 1rem;
+  }
 }
 
 .info_container {

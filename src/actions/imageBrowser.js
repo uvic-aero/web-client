@@ -1,8 +1,8 @@
-export const SET_FILTER_UNTAGGED = "SET_FILTER_UNTAGGED";
+export const SET_FILTER = "SET_FILTER";
 export const SET_BROWSER_LOADING = "SET_BROWSER_LOADING";
 
-export function setShowUntagged(filter) {
-  return { type: SET_FILTER_UNTAGGED, filter };
+export function setFilter(filter, active) {
+  return { type: SET_FILTER, filter, active };
 }
 
 export function setBrowserLoading(loading) {
