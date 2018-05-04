@@ -57,7 +57,7 @@ class ImageQueue extends Component {
   }
 
   handleInput = ev => {
-    console.log(ev.keyCode);
+    ev.preventDefault();
     switch (ev.keyCode) {
       case 37: // Left arrow
         this.props.previousImage(this.props.images);

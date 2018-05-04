@@ -25,9 +25,9 @@ export default class TargetAnalysis extends Component {
     this.state = {
       targets: [
         {
-          name: "target 1",
-          id: "t1",
-          imageID: "img1",
+          name: "Coming soon",
+          id: "",
+          imageID: "",
           tags: []
         }
       ]
