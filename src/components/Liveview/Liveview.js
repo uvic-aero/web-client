@@ -11,7 +11,7 @@ function mapStateToProps(state, props) {
   return {};
 }
 
-const liveviewUrl = "http://127.0.0.1:5000";
+const liveviewUrl = "http://192.168.0.113:5000";
 
 const mode2str = mode =>
   mode === 0 ? "None" : mode === 1 ? "Still" : mode === 2 ? "Live" : "Unknown";

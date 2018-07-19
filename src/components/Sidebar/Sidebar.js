@@ -11,6 +11,7 @@ import QueueIcon from "material-ui/svg-icons/av/queue";
 import WebIcon from "material-ui/svg-icons/av/web";
 import AnalysisIcon from "material-ui/svg-icons/action/trending-up";
 import SpectatorIcon from "material-ui/svg-icons/maps/terrain";
+import MapIcon from "material-ui/svg-icons/maps/map";
 import ReportIcon from "material-ui/svg-icons/content/content-paste";
 import LiveIcon from "material-ui/svg-icons/av/videocam";
 
@@ -53,6 +54,11 @@ export default class Sidebar extends Component {
           text: "Report",
           icon: <ReportIcon />,
           href: "/report"
+        },
+        {
+          text: "Map",
+          icon: <MapIcon />,
+          href: "/mapview"
         }
       ]
     };
