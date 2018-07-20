@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { browserHistory } from "react-router";
 import cx from "classnames";
 import s from "./Sidebar.css";
-import logo from "./AeroLogo.png";
+//import logo from "./AeroLogo.png";
 
 import Menu from "material-ui/Menu";
 import MenuItem from "material-ui/MenuItem";

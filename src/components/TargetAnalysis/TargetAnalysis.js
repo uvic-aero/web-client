@@ -9,7 +9,7 @@ class TargetRow extends Component {
   render() {
     return (
       <div className={s.target}>
-        <img className={s.target_image} width="250px" height="250px" />
+        <img className={s.target_image} width="250px" height="250px" alt="broken.jpg"/>
         <div className={s.target_name}>{this.props.name}</div>
         <div className={s.target_id}>{this.props.id}</div>
         <div />

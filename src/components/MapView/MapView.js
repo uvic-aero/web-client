@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import {
   withScriptjs,
   withGoogleMap,
@@ -6,9 +6,9 @@ import {
   Marker
 } from "react-google-maps";
 
-import get from "../../api";
+//import get from "../../api";
 
-
+  
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
@@ -91,15 +91,21 @@ const CustomSkinMap = withScriptjs(
   ))
 );
 
-function MapView({ ...props }) {
-  return (
-    <CustomSkinMap
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc"
-      loadingElement={<div style={{ height: `100%` }} />}
-      containerElement={<div style={{ height: `100vh` }} />}
-      mapElement={<div style={{ height: `100%` }} />}
-    />
-  );
+
+
+
+class MapView extends Component{
+  render(){
+    return(
+      <CustomSkinMap
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc"
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={<div style={{ height: `100vh` }} />}
+        mapElement={<div style={{ height: `100%` }} />}
+      />
+    );
+  }
 }
+
 
 export default MapView;
