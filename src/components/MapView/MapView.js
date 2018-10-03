@@ -104,38 +104,48 @@ const CustomSkinMap = withScriptjs(
   ))
 );
 
-
-
-
 class MapView extends Component{
-
-// These 2 markers serve as dummy markers, request markers with const marker_url and fill in necesarry values
-
-
-
 
   constructor(props){
     super();
     this.state = {
-
-      markers:[{
-        position:{
-          lat: 48.508814,
-          lng:-71.652456,
-          },
-        icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
+      // These 2 markers serve as dummy markers, request markers with const marker_url and fill in necesarry values
+      markers:[
+        {
+          position:{
+            lat: 48.508814,
+            lng:-71.652456,
+            },
+          icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
         },
         {
           position:{
             lat: 48.508824,
             lng:-71.633466,
-            }
-          },
+          }
+        },
       ]
-
     }
   }
 
+  /**
+   * @author Avery K.
+   * example starter for a get markers method
+   */
+  getMarkers() {
+    axios.get('/user?ID=12345')
+    .then(function (response) {
+      // handle success
+      console.log(response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+  }
 
   render(){
     return(
