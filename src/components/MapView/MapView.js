@@ -6,14 +6,26 @@ import {
   Marker
 } from "react-google-maps";
 
-//import get from "../../api";
+//axios is imported to assist with http requests
+import axios from 'axios'
 
+//import get from "../../api";
+const marker_url = 'http://192.168.0.110:24002/markers'
+
+//Request Markers From Ground Station 
+var markers = [];
+
+//Get Average lat and avg long from markers to calculate the center of map
+var lat = 48.508814;
+var long = -71.652456;
   
+
+
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
       defaultZoom={13}
-      defaultCenter={{ lat: 48.508814, lng: -71.652456 }}
+      defaultCenter={{ lat: lat, lng: long }}
       defaultOptions={{
         mapTypeId: 'terrain', 
         scrollwheel: false,
@@ -80,11 +92,12 @@ const CustomSkinMap = withScriptjs(
         ]
       }}
     >
-  
-     Populate markers in this section
 
-    <Marker position={{ lat: 48.508814, lng: -71.652456 }}/>
-    <Marker position={{ lat: 48.508824, lng: -71.652466 }}/>
+    {props.markers.map(marker => (
+      <Marker
+        {...marker}
+      />
+    ))}
     
 
     </GoogleMap>
@@ -95,6 +108,35 @@ const CustomSkinMap = withScriptjs(
 
 
 class MapView extends Component{
+
+// These 2 markers serve as dummy markers, request markers with const marker_url and fill in necesarry values
+
+
+
+
+  constructor(props){
+    super();
+    this.state = {
+
+      markers:[{
+        position:{
+          lat: 48.508814,
+          lng:-71.652456,
+          },
+        icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
+        },
+        {
+          position:{
+            lat: 48.508824,
+            lng:-71.633466,
+            }
+          },
+      ]
+
+    }
+  }
+
+
   render(){
     return(
       <CustomSkinMap
@@ -102,7 +144,11 @@ class MapView extends Component{
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-      />
+        markers={this.state.markers}
+      >
+
+      </CustomSkinMap>
+
     );
   }
 }
