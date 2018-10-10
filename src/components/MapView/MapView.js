@@ -6,8 +6,13 @@ import {
   Marker
 } from "react-google-maps";
 
-//axios is imported to assist with http requests
+/**
+ * axios is imported to assist with http requests
+ * DEPRICATED lib
+ */
 import axios from 'axios'
+
+import {getMarkers, captureStill} from '../../api';
 
 //import get from "../../api";
 const marker_url = 'http://192.168.0.110:24002/markers'
@@ -128,23 +133,11 @@ class MapView extends Component{
     }
   }
 
-  /**
-   * @author Avery K.
-   * example starter for a get markers method
-   */
-  getMarkers() {
-    axios.get('/user?ID=12345')
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .then(function () {
-      // always executed
-    });
+  componentDidMount() {
+    // make api call to retrieve markers
+    getMarkers()
+    .then(data => console.log(JSON.stringify(data)))
+    .catch(error => console.error(error));
   }
 
   render(){
