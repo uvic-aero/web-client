@@ -6,8 +6,13 @@ import {
   Marker
 } from "react-google-maps";
 
-//axios is imported to assist with http requests
+/**
+ * axios is imported to assist with http requests
+ * DEPRICATED lib
+ */
 import axios from 'axios'
+
+import {getMarkers, captureStill} from '../../api';
 
 //import get from "../../api";
 const marker_url = 'http://192.168.0.110:24002/markers'
@@ -104,38 +109,36 @@ const CustomSkinMap = withScriptjs(
   ))
 );
 
-
-
-
 class MapView extends Component{
-
-// These 2 markers serve as dummy markers, request markers with const marker_url and fill in necesarry values
-
-
-
 
   constructor(props){
     super();
     this.state = {
-
-      markers:[{
-        position:{
-          lat: 48.508814,
-          lng:-71.652456,
-          },
-        icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
+      // These 2 markers serve as dummy markers, request markers with const marker_url and fill in necesarry values
+      markers:[
+        {
+          position:{
+            lat: 48.508814,
+            lng:-71.652456,
+            },
+          icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
         },
         {
           position:{
             lat: 48.508824,
             lng:-71.633466,
-            }
-          },
+          }
+        },
       ]
-
     }
   }
 
+  componentDidMount() {
+    // make api call to retrieve markers
+    getMarkers()
+    .then(data => console.log(JSON.stringify(data)))
+    .catch(error => console.error(error));
+  }
 
   render(){
     return(
