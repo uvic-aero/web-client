@@ -26,6 +26,11 @@ function get(url, options = {}) {
   }).then(res => res.json());
 }
 
+// retrieve map markers for broken solar panels
+export function getMarkers() {
+  return get("/markers");
+}
+
 // Tell the onboard computer to capture a still image during liveview playback
 export function captureStill() {
   return get("/camera/still");
