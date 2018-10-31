@@ -115,28 +115,51 @@ class MapView extends Component{
     super();
     this.state = {
       // These 2 markers serve as dummy markers, request markers with const marker_url and fill in necesarry values
+      // markers:[
+      //   {
+      //     position:{
+      //       lat: 48.508814,
+      //       lng:-71.652456,
+      //       },
+      //     icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
+      //   },
+        // {
+        //   position:{
+        //     lat: 48.508824,
+        //     lng:-71.633466,
+        //   }
+        // },
+      // ]
       markers:[
-        {
-          position:{
-            lat: 48.508814,
-            lng:-71.652456,
-            },
-          icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
-        },
-        {
-          position:{
-            lat: 48.508824,
-            lng:-71.633466,
-          }
-        },
+        {}
       ]
     }
   }
 
   componentDidMount() {
+
+    var dumbData = {markers:[
+      {
+        position:{
+          lat: 48.508814,
+          lng:-71.652456,
+          },
+        icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
+      },
+      {
+        position:{
+          lat: 48.508824,
+          lng:-71.633466,
+        }
+      },
+    ]};
     // make api call to retrieve markers
     getMarkers()
-    .then(data => console.log(JSON.stringify(data)))
+    .then(data => {
+      // console.log(JSON.stringify(data));
+      console.log(data);
+      this.setState(data);
+    })
     .catch(error => console.error(error));
   }
 
