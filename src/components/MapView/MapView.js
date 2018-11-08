@@ -1,113 +1,121 @@
+/*global google*/
 import React, {Component} from "react";
-import {
+
+const { compose, withProps, withStateHandlers } = require("recompose");
+const {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   Marker
-} from "react-google-maps";
+} = require("react-google-maps");
+const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
 
-/**
- * axios is imported to assist with http requests
- * DEPRICATED lib
- */
-import axios from 'axios'
-
-import {getMarkers, captureStill} from '../../api';
-
-//import get from "../../api";
-const marker_url = 'http://192.168.0.110:24002/markers'
-
-//Request Markers From Ground Station 
-var markers = [];
+const {getMarkers} = require("../../api");
+const {defaultMapOptions} = require("./defaultMapOptions");
 
 //Get Average lat and avg long from markers to calculate the center of map
 var lat = 48.508814;
 var long = -71.652456;
-  
 
+const generateKey = (pre) => {
+  return `${ pre }_${ new Date().getTime() }`;
+}
 
-const CustomSkinMap = withScriptjs(
-  withGoogleMap(props => (
-    <GoogleMap
-      defaultZoom={13}
-      defaultCenter={{ lat: lat, lng: long }}
-      defaultOptions={{
-        mapTypeId: 'terrain', 
-        scrollwheel: false,
-        zoomControl: true,
-        styles: [
-          {
-            featureType: "water",
-            stylers: [
-              { saturation: 43 },
-              { lightness: -11 },
-              { hue: "#0088ff" }
-            ]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry.fill",
-            stylers: [
-              { hue: "#ff0000" },
-              { saturation: -100 },
-              { lightness: 99 }
-            ]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry.stroke",
-            stylers: [{ color: "#808080" }, { lightness: 54 }]
-          },
-          {
-            featureType: "landscape.man_made",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ece2d9" }]
-          },
-          {
-            featureType: "poi.park",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ccdca1" }]
-          },
-          {
-            featureType: "road",
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#767676" }]
-          },
-          {
-            featureType: "road",
-            elementType: "labels.text.stroke",
-            stylers: [{ color: "#ffffff" }]
-          },
-          { featureType: "poi", stylers: [{ visibility: "off" }] },
-          {
-            featureType: "landscape.natural",
-            elementType: "geometry.fill",
-            stylers: [{ visibility: "on" }, { color: "#b8cb93" }]
-          },
-          { featureType: "poi.park", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.sports_complex",
-            stylers: [{ visibility: "on" }]
-          },
-          { featureType: "poi.medical", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.business",
-            stylers: [{ visibility: "simplified" }]
-          }
-        ]
-      }}
+const StyledMapWithAnInfoBox = compose(
+  // withProps({
+  //   googleMapURL:"https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc",
+  //   loadingElement: <div style={{ height: `100%` }} />,
+  //   containerElement: <div style={{ height: `100vh` }} />,
+  //   mapElement: <div style={{ height: `100%` }} />,
+  //   center: { lat: 25.03, lng: 121.6 },
+  //   markers: this.state.markers,
+  // }),
+  withStateHandlers(() => ({
+    isOpen: false,
+  }), {
+    onToggleOpen: ({ isOpen }) => () => ({
+      isOpen: !isOpen,
+    })
+  }),
+  withScriptjs,
+  withGoogleMap
+)(props =>
+  <GoogleMap
+    defaultZoom={5}
+    defaultCenter={props.center}
+    defaultOptions={defaultMapOptions} // defined in ./defaultMapOptions
+  >
+    <InfoBox
+      defaultPosition={new google.maps.LatLng(props.center.lat, props.center.lng)}
+      options={{ closeBoxURL: ``, enableEventPropagation: true }}
     >
-
+      <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
+        <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
+          Hello, Taipei!
+        </div>
+      </div>
+    </InfoBox>
     {props.markers.map(marker => (
       <Marker
+        // key={ generateKey(marker.position.lat) }>
         {...marker}
-      />
+      >
+      {props.isOpen && <InfoBox
+        onCloseClick={props.onToggleOpen}
+        options={{ closeBoxURL: ``, enableEventPropagation: true }}
+      >
+        <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
+          <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
+            Hello, Kaohsiung!
+          </div>
+        </div>
+      </InfoBox>}
+      </Marker>
     ))}
-    
-
-    </GoogleMap>
-  ))
+    {/* <Marker
+      position={{ lat: 22.6273, lng: 120.3014 }}
+      onClick={props.onToggleOpen}
+    >
+      {props.isOpen && <InfoBox
+        onCloseClick={props.onToggleOpen}
+        options={{ closeBoxURL: ``, enableEventPropagation: true }}
+      >
+        <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
+          <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
+            Hello, Kaohsiung!
+          </div>
+        </div>
+      </InfoBox>}
+    </Marker> */}
+  </GoogleMap>
 );
+
+// const CustomSkinMap = withScriptjs(
+//   withGoogleMap(props => (
+//     <GoogleMap
+//       defaultZoom={13}
+//       defaultCenter={{ lat: lat, lng: long }}
+//       defaultOptions={defaultMapStyles}
+//     >
+//     <InfoBox
+//       // defaultPosition={{ lat: lat, lng: long }}
+//       options={{ closeBoxURL: ``, enableEventPropagation: true }}
+//     >
+//       <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
+//         <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
+//           Hello, Taipei!
+//         </div>
+//       </div>
+//     </InfoBox>
+    // {props.markers.map(marker => (
+    //   <Marker
+    //     {...marker}
+    //   />
+    // ))}
+    
+//     </GoogleMap>
+//   ))
+// );
 
 class MapView extends Component{
 
@@ -144,36 +152,43 @@ class MapView extends Component{
           lat: 48.508814,
           lng:-71.652456,
           },
-        icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
       },
       {
         position:{
           lat: 48.508824,
           lng:-71.633466,
-        }
+        },
       },
     ]};
     // make api call to retrieve markers
     getMarkers()
     .then(data => {
-      // console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
       console.log(data);
-      this.setState(data);
+      this.setState(dumbData);
     })
     .catch(error => console.error(error));
   }
 
   render(){
     return(
-      <CustomSkinMap
+      <StyledMapWithAnInfoBox 
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc"
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-        markers={this.state.markers}
-      >
+        center={{ lat: 25.03, lng: 121.6 }}
+        markers={this.state.markers}  
+      />
+       //<CustomSkinMap
+        // googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc"
+        // loadingElement={<div style={{ height: `100%` }} />}
+        // containerElement={<div style={{ height: `100vh` }} />}
+        // mapElement={<div style={{ height: `100%` }} />}
+        // markers={this.state.markers}
+      // >
 
-      </CustomSkinMap>
+      // </CustomSkinMap>
 
     );
   }
