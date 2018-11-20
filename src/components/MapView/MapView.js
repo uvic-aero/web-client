@@ -1,12 +1,10 @@
 /*global google*/
 import React, {Component} from "react";
 
-const { compose, withProps, withStateHandlers } = require("recompose");
 const {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker
 } = require("react-google-maps");
 const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/MarkerWithLabel");
 
@@ -16,10 +14,6 @@ const {defaultMapOptions} = require("./defaultMapOptions");
 //Get Average lat and avg long from markers to calculate the center of map
 var lat = 48.508814;
 var long = -71.652456;
-
-const generateKey = (pre) => {
-  return `${ pre }_${ new Date().getTime() }`;
-}
 
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
@@ -33,34 +27,36 @@ const CustomSkinMap = withScriptjs(
       const label_class = "marker_label_"+idx;
       return (
         <MarkerWithLabel
+          key={idx}
           position={marker.position}
           labelAnchor={new google.maps.Point(0, 0)}
           labelStyle={{backgroundColor: "yellow", fontSize: "32px", padding: "16px"}}
           labelClass={label_class}
           labelVisible={marker.label_visibile}
-          onMouseDown={ () => {props.onMarkerMouseDown(idx)}}
+          onMouseOver={ () => {props.onMarkerMouseOver(idx)}}
+          onMouseOut={ () => {props.onMarkerMouseOut(idx)}}
         >
-          <div>Hello There!</div>
+          <div>Hello There! I am Marker Number {idx}</div>
         </MarkerWithLabel>
       );
     } )}
-    
-
     </GoogleMap>
   ))
 );
 
 class MapView extends Component{
 
-  constructor(props){
+  constructor(props) {
     super();
     this.state = {
       markers:[
         {}
       ],
-    }
+    };
 
     this.onMarkerMouseDown = this.onMarkerMouseDown.bind(this);
+    this.onMarkerMouseOver = this.onMarkerMouseOver.bind(this);
+    this.onMarkerMouseOut = this.onMarkerMouseOut.bind(this);
   }
 
   componentDidMount() {
@@ -98,6 +94,18 @@ class MapView extends Component{
     this.setState({markers});
   }
 
+  onMarkerMouseOver(markerID) {
+    const markers = this.state.markers;
+    markers[markerID].label_visibile = true;
+    this.setState({markers});
+  }
+
+  onMarkerMouseOut(markerID) {
+    const markers = this.state.markers;
+    markers[markerID].label_visibile = false;
+    this.setState({markers});
+  }
+
   render(){
     return(
        <CustomSkinMap
@@ -107,6 +115,8 @@ class MapView extends Component{
         mapElement={<div style={{ height: `100%` }} />}
         markers={this.state.markers}
         onMarkerMouseDown={this.onMarkerMouseDown}
+        onMarkerMouseOver={this.onMarkerMouseOver}
+        onMarkerMouseOut={this.onMarkerMouseOut}
       />
     );
   }
