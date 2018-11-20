@@ -35,14 +35,10 @@ const CustomSkinMap = withScriptjs(
         <MarkerWithLabel
           position={marker.position}
           labelAnchor={new google.maps.Point(0, 0)}
-          // labelStyle={{backgroundColor: "yellow", fontSize: "32px", padding: "16px"}}
+          labelStyle={{backgroundColor: "yellow", fontSize: "32px", padding: "16px"}}
           labelClass={label_class}
-          // labelVisible={false}
-          onMouseDown={ (event) => {
-            console.log('yes lawd');
-            // const display = document.getElementsByClassName(id)[0].style.display;
-            // document.getElementsByClassName(id)[0].style.display = display == 'block' ? 'none' : 'block';
-          }}
+          labelVisible={marker.label_visibile}
+          onMouseDown={ () => {props.onMarkerMouseDown(idx)}}
         >
           <div>Hello There!</div>
         </MarkerWithLabel>
@@ -63,18 +59,22 @@ class MapView extends Component{
         {}
       ],
     }
+
+    this.onMarkerMouseDown = this.onMarkerMouseDown.bind(this);
   }
 
   componentDidMount() {
 
     var dumbData = {markers:[
       {
+        label_visibile: false,
         position:{
           lat: 48.508814,
           lng:-71.652456,
           },
       },
       {
+        label_visibile: false,
         position:{
           lat: 48.508824,
           lng:-71.633466,
@@ -87,9 +87,15 @@ class MapView extends Component{
     .then(data => {
       console.log(JSON.stringify(data));
       console.log(data);
-      this.setState(data);
+      this.setState(dumbData);
     })
     .catch(error => console.error(error));
+  }
+
+  onMarkerMouseDown(markerID) {
+    const markers = this.state.markers;
+    markers[markerID].label_visibile = !markers[markerID].label_visibile;
+    this.setState({markers});
   }
 
   render(){
@@ -100,6 +106,7 @@ class MapView extends Component{
         containerElement={<div style={{ height: `100vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
         markers={this.state.markers}
+        onMarkerMouseDown={this.onMarkerMouseDown}
       />
     );
   }
