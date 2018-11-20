@@ -34,15 +34,15 @@ const CustomSkinMap = withScriptjs(
       return (
         <MarkerWithLabel
           position={marker.position}
-          // {...marker}
           labelAnchor={new google.maps.Point(0, 0)}
           // labelStyle={{backgroundColor: "yellow", fontSize: "32px", padding: "16px"}}
           labelClass={label_class}
           // labelVisible={false}
-          // onMouseDown={function(id) {
-          //   const display = document.getElementsByClassName(id)[0].style.display;
-          //   document.getElementsByClassName(id)[0].style.display = display == 'block' ? 'none' : 'block';
-          // }(label_class)}
+          onMouseDown={ (event) => {
+            console.log('yes lawd');
+            // const display = document.getElementsByClassName(id)[0].style.display;
+            // document.getElementsByClassName(id)[0].style.display = display == 'block' ? 'none' : 'block';
+          }}
         >
           <div>Hello There!</div>
         </MarkerWithLabel>
