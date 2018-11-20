@@ -8,7 +8,7 @@ const {
   GoogleMap,
   Marker
 } = require("react-google-maps");
-const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
+const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/MarkerWithLabel");
 
 const {getMarkers} = require("../../api");
 const {defaultMapOptions} = require("./defaultMapOptions");
@@ -21,126 +21,47 @@ const generateKey = (pre) => {
   return `${ pre }_${ new Date().getTime() }`;
 }
 
-const StyledMapWithAnInfoBox = compose(
-  // withProps({
-  //   googleMapURL:"https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc",
-  //   loadingElement: <div style={{ height: `100%` }} />,
-  //   containerElement: <div style={{ height: `100vh` }} />,
-  //   mapElement: <div style={{ height: `100%` }} />,
-  //   center: { lat: 25.03, lng: 121.6 },
-  //   markers: this.state.markers,
-  // }),
-  withStateHandlers(() => ({
-    isOpen: false,
-  }), {
-    onToggleOpen: ({ isOpen }) => () => ({
-      isOpen: !isOpen,
-    })
-  }),
-  withScriptjs,
-  withGoogleMap
-)(props =>
-  <GoogleMap
-    defaultZoom={5}
-    defaultCenter={props.center}
-    defaultOptions={defaultMapOptions} // defined in ./defaultMapOptions
-  >
-    <InfoBox
-      defaultPosition={new google.maps.LatLng(props.center.lat, props.center.lng)}
-      options={{ closeBoxURL: ``, enableEventPropagation: true }}
+const CustomSkinMap = withScriptjs(
+  withGoogleMap(props => (
+    <GoogleMap
+      defaultZoom={13}
+      defaultCenter={{ lat: lat, lng: long }}
+      defaultOptions={defaultMapOptions}
     >
-      <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
-        <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
-          Hello, Taipei!
-        </div>
-      </div>
-    </InfoBox>
-    {props.markers.map(marker => (
-      <Marker
-        // key={ generateKey(marker.position.lat) }>
-        {...marker}
-      >
-      {props.isOpen && <InfoBox
-        onCloseClick={props.onToggleOpen}
-        options={{ closeBoxURL: ``, enableEventPropagation: true }}
-      >
-        <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
-          <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
-            Hello, Kaohsiung!
-          </div>
-        </div>
-      </InfoBox>}
-      </Marker>
-    ))}
-    {/* <Marker
-      position={{ lat: 22.6273, lng: 120.3014 }}
-      onClick={props.onToggleOpen}
-    >
-      {props.isOpen && <InfoBox
-        onCloseClick={props.onToggleOpen}
-        options={{ closeBoxURL: ``, enableEventPropagation: true }}
-      >
-        <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
-          <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
-            Hello, Kaohsiung!
-          </div>
-        </div>
-      </InfoBox>}
-    </Marker> */}
-  </GoogleMap>
-);
 
-// const CustomSkinMap = withScriptjs(
-//   withGoogleMap(props => (
-//     <GoogleMap
-//       defaultZoom={13}
-//       defaultCenter={{ lat: lat, lng: long }}
-//       defaultOptions={defaultMapStyles}
-//     >
-//     <InfoBox
-//       // defaultPosition={{ lat: lat, lng: long }}
-//       options={{ closeBoxURL: ``, enableEventPropagation: true }}
-//     >
-//       <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
-//         <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
-//           Hello, Taipei!
-//         </div>
-//       </div>
-//     </InfoBox>
-    // {props.markers.map(marker => (
-    //   <Marker
-    //     {...marker}
-    //   />
-    // ))}
+    {props.markers.map( function(marker, idx) {
+      const label_class = "marker_label_"+idx;
+      return (
+        <MarkerWithLabel
+          position={marker.position}
+          // {...marker}
+          labelAnchor={new google.maps.Point(0, 0)}
+          // labelStyle={{backgroundColor: "yellow", fontSize: "32px", padding: "16px"}}
+          labelClass={label_class}
+          // labelVisible={false}
+          // onMouseDown={function(id) {
+          //   const display = document.getElementsByClassName(id)[0].style.display;
+          //   document.getElementsByClassName(id)[0].style.display = display == 'block' ? 'none' : 'block';
+          // }(label_class)}
+        >
+          <div>Hello There!</div>
+        </MarkerWithLabel>
+      );
+    } )}
     
-//     </GoogleMap>
-//   ))
-// );
+
+    </GoogleMap>
+  ))
+);
 
 class MapView extends Component{
 
   constructor(props){
     super();
     this.state = {
-      // These 2 markers serve as dummy markers, request markers with const marker_url and fill in necesarry values
-      // markers:[
-      //   {
-      //     position:{
-      //       lat: 48.508814,
-      //       lng:-71.652456,
-      //       },
-      //     icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
-      //   },
-        // {
-        //   position:{
-        //     lat: 48.508824,
-        //     lng:-71.633466,
-        //   }
-        // },
-      // ]
       markers:[
         {}
-      ]
+      ],
     }
   }
 
@@ -160,36 +81,26 @@ class MapView extends Component{
         },
       },
     ]};
+
     // make api call to retrieve markers
     getMarkers()
     .then(data => {
       console.log(JSON.stringify(data));
       console.log(data);
-      this.setState(dumbData);
+      this.setState(data);
     })
     .catch(error => console.error(error));
   }
 
   render(){
     return(
-      <StyledMapWithAnInfoBox 
+       <CustomSkinMap
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc"
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-        center={{ lat: 25.03, lng: 121.6 }}
-        markers={this.state.markers}  
+        markers={this.state.markers}
       />
-       //<CustomSkinMap
-        // googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc"
-        // loadingElement={<div style={{ height: `100%` }} />}
-        // containerElement={<div style={{ height: `100vh` }} />}
-        // mapElement={<div style={{ height: `100%` }} />}
-        // markers={this.state.markers}
-      // >
-
-      // </CustomSkinMap>
-
     );
   }
 }
