@@ -51,9 +51,9 @@ export default class Sidebar extends Component {
           href: "/liveview"
         },
         {
-          text: "Report",
+          text: "Services",
           icon: <ReportIcon />,
-          href: "/report"
+          href: "/services"
         },
         {
           text: "Map",
