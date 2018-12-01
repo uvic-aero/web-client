@@ -37,7 +37,7 @@ function getService(command, application, options = {}) {
     ...options
   }).then(res => res.json());
 }
-
+//Functions used for service calls to obc.
 export function getStatus(application){
 	return getService("/status", `${application}`);
 }
