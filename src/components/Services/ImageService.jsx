@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
 import { getStatus, getStart, getStop } from "../../api";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class ImageService extends Component{
 	state = {
+		app:'/imageService',
 		status: 'Disconnected',
-		response: 'Null'
 	}
-	
-	handleStart(){
-		console.log('starting ImageService');
-		getStart('/imageService');
+	constructor(){
+		super();
+		this.handleStart = this.handleStart.bind(this)
+		this.handleStatus = this.handleStatus.bind(this)
+		this.handleStop = this.handleStop.bind(this)
+
 	}
-	handleStop(){
-		console.log('Stopping ImageService');
-		getStop('/imageService');
+	async	handleStart() {
+		var result = await getStart(this.state.app).then().catch(error=>console.log(error));
+		this.setState({ status: result.action });	
 	}
-	handleStatus(){
-		console.log('Refreshing Status');
-		getStatus('/imageService');
+	async	handleStop(){
+		var result = await getStop(this.state.app).then().catch(error=>console.log(error));
+		this.setState({ status: result.action });
+	}
+	async handleStatus(){
+		var result = await getStatus(this.state.app).then().catch(error=>console.log(error));
+		this.setState({ status: result.status });	
 	}
 	
 	render(){
