@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class VideoDisplay extends Component{
 	state = {
-		app:'/imageService',
+		app:'/videoDisplay',
 		status: 'Disconnected',
 	}
 	constructor(){

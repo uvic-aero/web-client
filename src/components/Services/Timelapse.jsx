@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Timelapse extends Component{
 	state = {
-		app:'/imageService',
+		app:'/timelapse',
 		status: 'Disconnected',
 	}
 	constructor(){
