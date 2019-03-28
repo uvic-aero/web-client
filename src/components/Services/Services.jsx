@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ImageService from './ImageService';
 import Timelapse from './Timelapse';
-import VideoDisplay from './VideoDisplay';
+import PiCamSettings from './PiCamSettings';
 
 class Services extends Component{
 	state = {
@@ -15,7 +15,7 @@ class Services extends Component{
 			<div className='container'>
 				<div className='row'>
 					<ImageService />
-					<VideoDisplay />
+					<PiCamSettings/>
 					<Timelapse />
 				</div>
 			</div>
