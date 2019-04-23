@@ -12,8 +12,8 @@ const {getMarkers} = require("../../api");
 const {defaultMapOptions} = require("./defaultMapOptions");
 
 //Get Average lat and avg long from markers to calculate the center of map
-var lat = 48.508814;
-var long = -71.652456;
+var lat = 48.541883;
+var long = -123.372747;
 
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
@@ -25,18 +25,26 @@ const CustomSkinMap = withScriptjs(
 
     {props.markers.map( function(marker, idx) {
       const label_class = "marker_label_"+idx;
+	  let src = `/Users/dragon/aero/ground-station/${marker.image_path}`;
+	  console.log(src);
       return (
         <MarkerWithLabel
           key={idx}
           position={marker.position}
           labelAnchor={new google.maps.Point(0, 0)}
-          labelStyle={{backgroundColor: "yellow", fontSize: "32px", padding: "16px"}}
+          labelStyle={{backgroundColor: "white", fontSize: "12px", padding: "2px"}}
           labelClass={label_class}
-          labelVisible={marker.label_visibile}
+          labelVisible={ marker.label_visible }
           onMouseOver={ () => {props.onMarkerMouseOver(idx)}}
-          onMouseOut={ () => {props.onMarkerMouseOut(idx)}}
+          onMouseOut={ () => {props.onMarkerMouseOut(idx)}} 
         >
-          <div>Hello There! I am Marker Number {idx}</div>
+          <div>
+		    <p>Lon: {marker.position.lng} </p>
+		    <p>Lat: {marker.position.lat} </p>
+		    <p>Alt: {marker.alt} </p>
+		    <p>Img Path: {src} </p>
+			<img src={`/Users/dragon/aero/ground-station/${marker.image_path}`} />
+		  </div>
         </MarkerWithLabel>
       );
     } )}
@@ -81,9 +89,9 @@ class MapView extends Component{
     // make api call to retrieve markers
     getMarkers()
     .then(data => {
-      console.log(JSON.stringify(data));
-      console.log(data);
-      this.setState(dumbData);
+	  let markers = this.formatToMarker(data.markers);
+      console.log({markers});
+	  this.setState({markers});
     })
     .catch(error => console.error(error));
   }
@@ -96,16 +104,26 @@ class MapView extends Component{
 
   onMarkerMouseOver(markerID) {
     const markers = this.state.markers;
-    markers[markerID].label_visibile = true;
+	this.state.markers[markerID]['label_visible'] = true;
     this.setState({markers});
   }
 
   onMarkerMouseOut(markerID) {
     const markers = this.state.markers;
-    markers[markerID].label_visibile = false;
+    markers[markerID]['label_visible'] = false;
+	this.state.markers[markerID]['label_visible'] = false;
     this.setState({markers});
   }
-
+  
+  formatToMarker = (data) => {
+	let markers = [];
+    data.forEach((item) => {
+		console.log(item);
+		item['label_visible'] = false;
+		markers.push(item);
+	});
+	return markers;
+  }
   render(){
     return(
        <CustomSkinMap
