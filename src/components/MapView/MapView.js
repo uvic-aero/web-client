@@ -120,4 +120,14 @@ class MapView extends Component{
       />
     );
   }
-} export default connect(null, { setCurrentImageID })(MapView);
+  
+}
+
+const mapStateToProps = state => ({
+  currentImageId: state.currentImageId,
+  currentImage: state.images.length
+  ? state.images[state.currentImageId]
+  : undefined,
+});
+
+export default connect(mapStateToProps, { setCurrentImageID })(MapView);
