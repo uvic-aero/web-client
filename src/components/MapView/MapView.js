@@ -1,5 +1,6 @@
-/*global google*/
 import React, {Component} from "react";
+import { connect } from 'react-redux';
+import { setCurrentImageID } from '../actions/mapMarkerImage';
 
 const {
   withScriptjs,
@@ -81,7 +82,6 @@ class MapView extends Component{
     // make api call to retrieve markers
     getMarkers()
     .then(data => {
-      console.log(JSON.stringify(data));
       console.log(data);
       this.setState(dumbData);
     })
@@ -120,7 +120,4 @@ class MapView extends Component{
       />
     );
   }
-}
-
-
-export default MapView;
+} export default connect(null, { setCurrentImageID })(MapView);
