@@ -1,6 +1,7 @@
+/*global google*/
 import React, {Component} from "react";
 import { connect } from 'react-redux';
-import { setCurrentImageID } from '../actions/mapMarkerImage';
+import { setCurrentImageID } from '../../actions/mapMarkerImage';
 
 const {
   withScriptjs,
@@ -83,7 +84,7 @@ class MapView extends Component{
     getMarkers()
     .then(data => {
       console.log(data);
-      this.setState(dumbData);
+      this.setState(data);
     })
     .catch(error => console.error(error));
   }
@@ -98,6 +99,7 @@ class MapView extends Component{
     const markers = this.state.markers;
     markers[markerID].label_visibile = true;
     this.setState({markers});
+    this.setCurrentImageID(markerID);
   }
 
   onMarkerMouseOut(markerID) {
