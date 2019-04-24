@@ -1,7 +1,7 @@
 /*global google*/
 import React, {Component} from "react";
 import { connect } from 'react-redux';
-import { setCurrentImageID } from '../../actions/mapMarkerImage';
+import { setCurrentImageID, fetchImages } from '../../actions/mapMarkerImage';
 
 const {
   withScriptjs,
@@ -10,12 +10,11 @@ const {
 } = require("react-google-maps");
 const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/MarkerWithLabel");
 
-const {getMarkers} = require("../../api");
 const {defaultMapOptions} = require("./defaultMapOptions");
 
 //Get Average lat and avg long from markers to calculate the center of map
-var lat = 48.508814;
-var long = -71.652456;
+var lat = 48.541883;
+var long = -123.372747;
 
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
@@ -24,37 +23,54 @@ const CustomSkinMap = withScriptjs(
       defaultCenter={{ lat: lat, lng: long }}
       defaultOptions={defaultMapOptions}
     >
-
-    {props.markers.map( function(marker, idx) {
-      const label_class = "marker_label_"+idx;
+    {props.images.map( (image, idx) => {
+    idx-=1; // index starts at 1 for some dumb reason
+    const marker = {
+      position: {lat: image.telemetry['lat'], lng: image.telemetry['lon']}
+    };
+    console.log(marker);
+    const label_class = "marker_label_"+idx;
+    let imgUrl = props.currentImage ? props.currentImage.url : undefined;
+	  console.log(props.currentImage);
       return (
         <MarkerWithLabel
           key={idx}
           position={marker.position}
           labelAnchor={new google.maps.Point(0, 0)}
-          labelStyle={{backgroundColor: "yellow", fontSize: "32px", padding: "16px"}}
+          labelStyle={{backgroundColor: "white", fontSize: "12px", padding: "2px"}}
           labelClass={label_class}
-          labelVisible={marker.label_visibile}
+          labelVisible={ idx === props.currentImageId } // display if current image
           onMouseOver={ () => {props.onMarkerMouseOver(idx)}}
-          onMouseOut={ () => {props.onMarkerMouseOut(idx)}}
+          onMouseOut={ () => {props.onMarkerMouseOut(idx)}} 
         >
-          <div>Hello There! I am Marker Number {idx}</div>
+          <div>
+		    <p>Lon: {marker.position.lng} </p>
+		    <p>Lat: {marker.position.lat} </p>
+		    <p>Alt: {marker.alt} </p>
+		    <p>Img Path: {imgUrl} </p>
+			  <img src={imgUrl}/>
+		  </div>
         </MarkerWithLabel>
       );
-    } )}
+    })}
     </GoogleMap>
   ))
 );
 
+/**
+ * MapView uses the mapMarkerImage state from our redux store.
+ * Images taken by the PiCam have GPS coordinates attached to them.
+ * These images are fetched and stored in redux, and then subsequently mapped to
+ * MapView props.
+ * MapView also uses redux to set the current image-marker that is being moused over.
+ */
 class MapView extends Component{
 
   constructor(props) {
-    super();
+    super(props);
     this.state = {
-      markers:[
-        {}
-      ],
-    };
+      currentImageId: undefined
+    }
 
     this.onMarkerMouseDown = this.onMarkerMouseDown.bind(this);
     this.onMarkerMouseOver = this.onMarkerMouseOver.bind(this);
@@ -62,31 +78,7 @@ class MapView extends Component{
   }
 
   componentDidMount() {
-
-    var dumbData = {markers:[
-      {
-        label_visibile: false,
-        position:{
-          lat: 48.508814,
-          lng:-71.652456,
-          },
-      },
-      {
-        label_visibile: false,
-        position:{
-          lat: 48.508824,
-          lng:-71.633466,
-        },
-      },
-    ]};
-
-    // make api call to retrieve markers
-    getMarkers()
-    .then(data => {
-      console.log(data);
-      this.setState(data);
-    })
-    .catch(error => console.error(error));
+    this.props.fetchImages();
   }
 
   onMarkerMouseDown(markerID) {
@@ -95,19 +87,16 @@ class MapView extends Component{
     this.setState({markers});
   }
 
-  onMarkerMouseOver(markerID) {
-    const markers = this.state.markers;
-    markers[markerID].label_visibile = true;
-    this.setState({markers});
-    this.setCurrentImageID(markerID);
+  onMarkerMouseOver(imageID) {
+    this.props.setCurrentImageID(imageID);
+    // this.forceUpdate();
+    console.log(this.props.currentImageId);
   }
 
   onMarkerMouseOut(markerID) {
-    const markers = this.state.markers;
-    markers[markerID].label_visibile = false;
-    this.setState({markers});
+    this.props.setCurrentImageID(undefined);
   }
-
+  
   render(){
     return(
        <CustomSkinMap
@@ -115,21 +104,25 @@ class MapView extends Component{
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-        markers={this.state.markers}
+        images={this.props.images}
         onMarkerMouseDown={this.onMarkerMouseDown}
         onMarkerMouseOver={this.onMarkerMouseOver}
         onMarkerMouseOut={this.onMarkerMouseOut}
+        currentImage={this.props.currentImage}
+        currentImageId={this.props.currentImageId}
       />
     );
   }
-  
 }
 
-const mapStateToProps = state => ({
-  currentImageId: state.currentImageId,
-  currentImage: state.images.length
-  ? state.images[state.currentImageId]
-  : undefined,
-});
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    currentImageId: state.mapMarkerImage.currentImageId,
+    images: state.mapMarkerImage.images,
+    currentImage: state.mapMarkerImage.images[state.mapMarkerImage.currentImageId],
+  }
+};
 
-export default connect(mapStateToProps, { setCurrentImageID })(MapView);
+export default connect(mapStateToProps, { setCurrentImageID, fetchImages })(MapView);
+

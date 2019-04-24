@@ -67,7 +67,8 @@
     "react-tap-event-plugin": "^2.0.1",
     "recompose": "^0.30.0",
     "redux": "^3.7.2",
-    "redux-connect": "^5.1.0"
+    "redux-connect": "^5.1.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
