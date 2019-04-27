@@ -33,7 +33,7 @@ export function getMarkers() {
 
 // retrieve images
 export function getImages() {
-  return get("/images/telem");
+  return get("/images");
 }
 
 // Tell the onboard computer to capture a still image during liveview playback

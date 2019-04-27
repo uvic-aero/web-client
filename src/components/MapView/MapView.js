@@ -24,7 +24,8 @@ const CustomSkinMap = withScriptjs(
       defaultOptions={defaultMapOptions}
     >
     {props.images.map( (image, idx) => {
-    idx-=1; // index starts at 1 for some dumb reason
+    console.log(idx);
+    // idx-=1; // index starts at 1 for some dumb reason
     const marker = {
       position: {lat: image.telemetry['lat'], lng: image.telemetry['lon']}
     };

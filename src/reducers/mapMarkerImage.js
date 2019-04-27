@@ -3,7 +3,7 @@ import { PUSH_IMAGE } from "../actions/network";
 
 let initialState = {
     images: [],
-    currentImageId: 0,
+    currentImageId: undefined,
 };
 
 export default function(state = initialState, action) {
