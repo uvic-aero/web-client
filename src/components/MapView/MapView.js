@@ -49,7 +49,7 @@ const CustomSkinMap = withScriptjs(
 		    <p>Lat: {marker.position.lat} </p>
 		    <p>Alt: {marker.alt} </p>
 		    <p>Img Path: {imgUrl} </p>
-			  <img src={imgUrl}/>
+			  <img height={300} width={350} src={imgUrl}/>
 		  </div>
         </MarkerWithLabel>
       );
