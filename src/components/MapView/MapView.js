@@ -24,15 +24,15 @@ const CustomSkinMap = withScriptjs(
       defaultOptions={defaultMapOptions}
     >
     {props.images.map( (image, idx) => {
-    console.log(idx);
-    // idx-=1; // index starts at 1 for some dumb reason
     const marker = {
       position: {lat: image.telemetry['lat'], lng: image.telemetry['lon']}
     };
-    console.log(marker);
+
+    // Label styles, classes, and values
     const label_class = "marker_label_"+idx;
     let imgUrl = props.currentImage ? props.currentImage.url : undefined;
-	  console.log(props.currentImage);
+    let styles = {position: 'fixed', zIndex: '1000'}
+
       return (
         <MarkerWithLabel
           key={idx}
@@ -43,14 +43,15 @@ const CustomSkinMap = withScriptjs(
           labelVisible={ idx === props.currentImageId } // display if current image
           onMouseOver={ () => {props.onMarkerMouseOver(idx)}}
           onMouseOut={ () => {props.onMarkerMouseOut(idx)}} 
+          zIndex={20000}
         >
           <div>
-		    <p>Lon: {marker.position.lng} </p>
-		    <p>Lat: {marker.position.lat} </p>
-		    <p>Alt: {marker.alt} </p>
-		    <p>Img Path: {imgUrl} </p>
-			  <img height={300} width={350} src={imgUrl}/>
-		  </div>
+            <p>Lon: {marker.position.lng} </p>
+            <p>Lat: {marker.position.lat} </p>
+            <p>Alt: {marker.alt} </p>
+            <p>Img Path: {imgUrl} </p>
+            <img height={300} width={350} src={imgUrl} />
+          </div>
         </MarkerWithLabel>
       );
     })}
