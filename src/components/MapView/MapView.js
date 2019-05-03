@@ -12,10 +12,6 @@ const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/Mar
 
 const {defaultMapOptions} = require("./defaultMapOptions");
 
-//Get Average lat and avg long from markers to calculate the center of map
-var lat = 48.541883;
-var long = -123.372747;
-
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
@@ -47,10 +43,8 @@ const CustomSkinMap = withScriptjs(
           zIndex={20000}
         >
           <div>
-            <a href={imgUrl}>View Image In New Tab</a>
             <p>Lon: {marker.position.lng} </p>
             <p>Lat: {marker.position.lat} </p>
-            <p>Alt: {marker.position.alt} </p>
             <img height={300} width={350} src={imgUrl} />
           </div>
         </MarkerWithLabel>
@@ -79,6 +73,11 @@ class MapView extends Component{
     this.onMarkerMouseDown = this.onMarkerMouseDown.bind(this);
     this.onMarkerMouseOver = this.onMarkerMouseOver.bind(this);
     this.onMarkerMouseOut = this.onMarkerMouseOut.bind(this);
+    this.keyDown = this.keyDown.bind(this);
+  }
+
+  componentWillMount() {
+    window.addEventListener("keydown", this.keyDown, false);
   }
 
   componentDidMount() {
@@ -101,6 +100,14 @@ class MapView extends Component{
 
   onMarkerMouseDown(url) {
     window.open(url, "_blank");
+  }
+
+  keyDown(event) {
+    const key = (event.detail || event.which).toString();
+    let curImg = this.props.currentImage;
+    if(key == '87' && curImg) {
+      window.open(curImg.url, "_blank");
+    }
   }
   
   render(){
