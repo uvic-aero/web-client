@@ -20,7 +20,7 @@ const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
       defaultZoom={13}
-      defaultCenter={{ lat: lat, lng: long }}
+      defaultCenter={props.avgCoord}
       defaultOptions={defaultMapOptions}
     >
     {props.images.map( (image, idx) => {
@@ -31,28 +31,30 @@ const CustomSkinMap = withScriptjs(
     // Label styles, classes, and values
     const label_class = "marker_label_"+idx;
     let imgUrl = props.currentImage ? props.currentImage.url : undefined;
-    let styles = {position: 'fixed', zIndex: '1000'}
 
       return (
+        // <div class={'markerWrapper'} style={{height: '500px', width: '500px', position: 'fixed', top: '0', bottom: '0', left: '0', right: '0'}}>
         <MarkerWithLabel
           key={idx}
           position={marker.position}
-          labelAnchor={new google.maps.Point(0, 0)}
-          labelStyle={{backgroundColor: "white", fontSize: "12px", padding: "2px"}}
+          labelAnchor={new google.maps.Point(50, 10)}
+          labelStyle={{backgroundColor: 'rgba(255,255,255,.7)', borderRadius:'.5', fontSize: "12px", padding: "20px"}}
           labelClass={label_class}
           labelVisible={ idx === props.currentImageId } // display if current image
           onMouseOver={ () => {props.onMarkerMouseOver(idx)}}
           onMouseOut={ () => {props.onMarkerMouseOut(idx)}} 
+          // onMouseDown={ () => {props.onMarkerMouseDown(imgUrl)}} 
           zIndex={20000}
         >
           <div>
+            <a href={imgUrl}>View Image In New Tab</a>
             <p>Lon: {marker.position.lng} </p>
             <p>Lat: {marker.position.lat} </p>
-            <p>Alt: {marker.alt} </p>
-            <p>Img Path: {imgUrl} </p>
+            <p>Alt: {marker.position.alt} </p>
             <img height={300} width={350} src={imgUrl} />
           </div>
         </MarkerWithLabel>
+        // </div>
       );
     })}
     </GoogleMap>
@@ -91,12 +93,14 @@ class MapView extends Component{
 
   onMarkerMouseOver(imageID) {
     this.props.setCurrentImageID(imageID);
-    // this.forceUpdate();
-    console.log(this.props.currentImageId);
   }
 
   onMarkerMouseOut(markerID) {
     this.props.setCurrentImageID(undefined);
+  }
+
+  onMarkerMouseDown(url) {
+    window.open(url, "_blank");
   }
   
   render(){
@@ -112,6 +116,7 @@ class MapView extends Component{
         onMarkerMouseOut={this.onMarkerMouseOut}
         currentImage={this.props.currentImage}
         currentImageId={this.props.currentImageId}
+        avgCoord={this.props.avgCoord}
       />
     );
   }
@@ -123,6 +128,7 @@ const mapStateToProps = state => {
     currentImageId: state.mapMarkerImage.currentImageId,
     images: state.mapMarkerImage.images,
     currentImage: state.mapMarkerImage.images[state.mapMarkerImage.currentImageId],
+    avgCoord: state.mapMarkerImage.avgCoord
   }
 };
 
