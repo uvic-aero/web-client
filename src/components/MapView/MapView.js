@@ -43,8 +43,8 @@ const CustomSkinMap = withScriptjs(
           zIndex={20000}
         >
           <div>
-            <p>Lon: {marker.position.lng} </p>
             <p>Lat: {marker.position.lat} </p>
+            <p>Lng: {marker.position.lng} </p>
             <img height={300} width={350} src={imgUrl} />
           </div>
         </MarkerWithLabel>
@@ -130,7 +130,6 @@ class MapView extends Component{
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     currentImageId: state.mapMarkerImage.currentImageId,
     images: state.mapMarkerImage.images,

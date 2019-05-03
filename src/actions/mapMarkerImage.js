@@ -4,7 +4,6 @@ const {getImages} = require("../api");
 
 // dispatches the current image-marker that is being viewed in the MapVIew component
 export const setCurrentImageID = id => dispatch => {
-    console.log(id);
     dispatch({
         type: CURRENT_IMAGE,
         currentImageId: id
@@ -15,7 +14,6 @@ export const setCurrentImageID = id => dispatch => {
 export const fetchImages = () => dispatch => {
     getImages()
     .then(images => {
-        console.log(images)
         dispatch({
             type: FETCH_IMAGES,
             ...images

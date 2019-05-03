@@ -13,7 +13,6 @@ export default function(state = initialState, action) {
             let computedCoord = computeAvgCoord(action.images);
             return Object.assign({}, state, {images: action.images}, {avgCoord: computedCoord});
         case CURRENT_IMAGE: // updates the current image-marker that is being viewed in the MapView component
-            console.log(action.currentImageId);
             return Object.assign({}, state, {currentImageId: action.currentImageId});
         case PUSH_IMAGE: // merges realtime pushed images from GS with existing images in web client
             return Object.assign({}, state, {images: [...state.images, action.image]});
@@ -28,7 +27,6 @@ function computeAvgCoord(coords) {
     var lng = 0;
     const numCoords = coords.length;
     coords.forEach(coord => {
-        console.log(coord);
         lat +=coord.telemetry['lat'];
         lng +=coord.telemetry['lon'];
     });
