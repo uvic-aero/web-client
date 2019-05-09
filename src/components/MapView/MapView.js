@@ -1,160 +1,142 @@
+/*global google*/
 import React, {Component} from "react";
-import {
+import { connect } from 'react-redux';
+import { setCurrentImageID, fetchImages } from '../../actions/mapMarkerImage';
+
+const {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker
-} from "react-google-maps";
+} = require("react-google-maps");
+const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/MarkerWithLabel");
 
-/**
- * axios is imported to assist with http requests
- * DEPRICATED lib
- */
-import axios from 'axios'
-
-import {getMarkers, captureStill} from '../../api';
-
-//import get from "../../api";
-const marker_url = 'http://192.168.0.110:24002/markers'
-
-//Request Markers From Ground Station 
-var markers = [];
-
-//Get Average lat and avg long from markers to calculate the center of map
-var lat = 48.508814;
-var long = -71.652456;
-  
-
+const {defaultMapOptions} = require("./defaultMapOptions");
 
 const CustomSkinMap = withScriptjs(
   withGoogleMap(props => (
     <GoogleMap
       defaultZoom={13}
-      defaultCenter={{ lat: lat, lng: long }}
-      defaultOptions={{
-        mapTypeId: 'terrain', 
-        scrollwheel: false,
-        zoomControl: true,
-        styles: [
-          {
-            featureType: "water",
-            stylers: [
-              { saturation: 43 },
-              { lightness: -11 },
-              { hue: "#0088ff" }
-            ]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry.fill",
-            stylers: [
-              { hue: "#ff0000" },
-              { saturation: -100 },
-              { lightness: 99 }
-            ]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry.stroke",
-            stylers: [{ color: "#808080" }, { lightness: 54 }]
-          },
-          {
-            featureType: "landscape.man_made",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ece2d9" }]
-          },
-          {
-            featureType: "poi.park",
-            elementType: "geometry.fill",
-            stylers: [{ color: "#ccdca1" }]
-          },
-          {
-            featureType: "road",
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#767676" }]
-          },
-          {
-            featureType: "road",
-            elementType: "labels.text.stroke",
-            stylers: [{ color: "#ffffff" }]
-          },
-          { featureType: "poi", stylers: [{ visibility: "off" }] },
-          {
-            featureType: "landscape.natural",
-            elementType: "geometry.fill",
-            stylers: [{ visibility: "on" }, { color: "#b8cb93" }]
-          },
-          { featureType: "poi.park", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.sports_complex",
-            stylers: [{ visibility: "on" }]
-          },
-          { featureType: "poi.medical", stylers: [{ visibility: "on" }] },
-          {
-            featureType: "poi.business",
-            stylers: [{ visibility: "simplified" }]
-          }
-        ]
-      }}
+      defaultCenter={props.avgCoord}
+      defaultOptions={defaultMapOptions}
     >
+    {props.images.map( (image, idx) => {
+    const marker = {
+      position: {lat: image.telemetry['lat'], lng: image.telemetry['lon']}
+    };
 
-    {props.markers.map(marker => (
-      <Marker
-        {...marker}
-      />
-    ))}
-    
+    // Label styles, classes, and values
+    const label_class = "marker_label_"+idx;
+    let imgUrl = props.currentImage ? props.currentImage.url : undefined;
 
+      return (
+        // <div class={'markerWrapper'} style={{height: '500px', width: '500px', position: 'fixed', top: '0', bottom: '0', left: '0', right: '0'}}>
+        <MarkerWithLabel
+          key={idx}
+          position={marker.position}
+          labelAnchor={new google.maps.Point(50, 10)}
+          labelStyle={{backgroundColor: 'rgba(255,255,255,.7)', borderRadius:'.5', fontSize: "12px", padding: "20px"}}
+          labelClass={label_class}
+          labelVisible={ idx === props.currentImageId } // display if current image
+          onMouseOver={ () => {props.onMarkerMouseOver(idx)}}
+          onMouseOut={ () => {props.onMarkerMouseOut(idx)}} 
+          // onMouseDown={ () => {props.onMarkerMouseDown(imgUrl)}} 
+          zIndex={20000}
+        >
+          <div>
+            <p>Lat: {marker.position.lat} </p>
+            <p>Lng: {marker.position.lng} </p>
+            <img height={300} width={350} src={imgUrl} />
+          </div>
+        </MarkerWithLabel>
+        // </div>
+      );
+    })}
     </GoogleMap>
   ))
 );
 
+/**
+ * MapView uses the mapMarkerImage state from our redux store.
+ * Images taken by the PiCam have GPS coordinates attached to them.
+ * These images are fetched and stored in redux, and then subsequently mapped to
+ * MapView props.
+ * MapView also uses redux to set the current image-marker that is being moused over.
+ */
 class MapView extends Component{
 
-  constructor(props){
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      // These 2 markers serve as dummy markers, request markers with const marker_url and fill in necesarry values
-      markers:[
-        {
-          position:{
-            lat: 48.508814,
-            lng:-71.652456,
-            },
-          icon: 'https://khms1.googleapis.com/kh?v=810&hl=en&x=44837&y=104704&z=18',
-        },
-        {
-          position:{
-            lat: 48.508824,
-            lng:-71.633466,
-          }
-        },
-      ]
+      currentImageId: undefined
     }
+
+    this.onMarkerMouseDown = this.onMarkerMouseDown.bind(this);
+    this.onMarkerMouseOver = this.onMarkerMouseOver.bind(this);
+    this.onMarkerMouseOut = this.onMarkerMouseOut.bind(this);
+    this.keyDown = this.keyDown.bind(this);
+  }
+
+  componentWillMount() {
+    window.addEventListener("keydown", this.keyDown, false);
   }
 
   componentDidMount() {
-    // make api call to retrieve markers
-    getMarkers()
-    .then(data => console.log(JSON.stringify(data)))
-    .catch(error => console.error(error));
+    this.props.fetchImages();
   }
 
+  onMarkerMouseDown(markerID) {
+    const markers = this.state.markers;
+    markers[markerID].label_visibile = !markers[markerID].label_visibile;
+    this.setState({markers});
+  }
+
+  onMarkerMouseOver(imageID) {
+    this.props.setCurrentImageID(imageID);
+  }
+
+  onMarkerMouseOut(markerID) {
+    this.props.setCurrentImageID(undefined);
+  }
+
+  onMarkerMouseDown(url) {
+    window.open(url, "_blank");
+  }
+
+  keyDown(event) {
+    const key = (event.detail || event.which).toString();
+    let curImg = this.props.currentImage;
+    if(key == '87' && curImg) {
+      window.open(curImg.url, "_blank");
+    }
+  }
+  
   render(){
     return(
-      <CustomSkinMap
+       <CustomSkinMap
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJEYOe-QHAbvKTaH_JSZ4cKtIxSiLMUc"
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `100vh` }} />}
         mapElement={<div style={{ height: `100%` }} />}
-        markers={this.state.markers}
-      >
-
-      </CustomSkinMap>
-
+        images={this.props.images}
+        onMarkerMouseDown={this.onMarkerMouseDown}
+        onMarkerMouseOver={this.onMarkerMouseOver}
+        onMarkerMouseOut={this.onMarkerMouseOut}
+        currentImage={this.props.currentImage}
+        currentImageId={this.props.currentImageId}
+        avgCoord={this.props.avgCoord}
+      />
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    currentImageId: state.mapMarkerImage.currentImageId,
+    images: state.mapMarkerImage.images,
+    currentImage: state.mapMarkerImage.images[state.mapMarkerImage.currentImageId],
+    avgCoord: state.mapMarkerImage.avgCoord
+  }
+};
 
-export default MapView;
+export default connect(mapStateToProps, { setCurrentImageID, fetchImages })(MapView);
+

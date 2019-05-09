@@ -52,6 +52,11 @@ export function getMarkers() {
   return get("/markers");
 }
 
+// retrieve images
+export function getImages() {
+  return get("/images");
+}
+
 // Tell the onboard computer to capture a still image during liveview playback
 export function captureStill() {
   return get("/camera/still");
